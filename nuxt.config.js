@@ -54,6 +54,7 @@ export default {
     '@nuxtjs/axios',
     // Doc: https://github.com/nuxt-community/dotenv-module
     '@nuxtjs/dotenv',
+    '@nuxtjs/auth',
     'bootstrap-vue/nuxt'
   ],
   /*
@@ -91,5 +92,20 @@ export default {
      ** You can extend webpack config here
      */
     extend(config, ctx) {}
+  },
+  auth: {
+    strategies: {
+      local: {
+        endpoints: {
+          login: {
+            url: '',
+            method: 'post'
+          }
+        }
+      }
+    }
+  },
+  router: {
+    middleware: ['auth']
   }
 }

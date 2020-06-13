@@ -1,9 +1,10 @@
 <template>
   <v-container>
     <v-row align="start" justify="center" class="mt-5">
-      <v-col class="text-center" md="3">
+      <v-col class="text-center my-style">
         <h1 class="m-5">Registro</h1>
         <v-form>
+          <!--
           <v-text-field
             v-model="form.name"
             type="text"
@@ -28,13 +29,22 @@
             label="Colegio"
             outlined
           />
+          -->
+          <v-text-field
+            v-model="form.username"
+            type="text"
+            label="Nombre de usuario"
+            outlined
+          />
           <v-text-field
             v-model="form.password"
             type="password"
             label="Contraseña"
             outlined
           />
-          <v-btn color="primary" class="mt-3" @click="onSubmit">submit</v-btn>
+          <v-btn color="primary" class="mt-3" @click="onSubmit"
+            >Registrar</v-btn
+          >
         </v-form>
       </v-col>
     </v-row>
@@ -45,6 +55,7 @@
 import { validationMixin } from 'vuelidate'
 import { required, maxLength, email } from 'vuelidate/lib/validators'
 export default {
+  auth: false,
   mixins: [validationMixin],
   validations: {
     form: {
@@ -55,10 +66,11 @@ export default {
   data() {
     return {
       form: {
-        name: '',
-        lastName: '',
-        schoolName: '',
-        email: '',
+        // name: '',
+        // lastName: '',
+        // schoolName: '',
+        // email: '',
+        username: '',
         password: ''
       }
     }
@@ -81,12 +93,21 @@ export default {
   },
   methods: {
     onSubmit() {
+      console.log(JSON.stringify(this.form))
       const url = ''
-      this.$v.$touch()
+      // this.$v.$touch()
       this.$axios
-        .$post(url)
+        .$post(url, {
+          // name: this.form.name,
+          // lastName: this.form.lastName,
+          // schoolName: this.form.schoolName,
+          // email: this.form.email,
+          username: this.username,
+          password: this.form.email
+        })
         .then((res) => {})
         .catch((e) => {})
+      // this.$auth.setUserToken().then(() => {})
     }
   }
 }

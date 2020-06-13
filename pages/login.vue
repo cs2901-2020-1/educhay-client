@@ -1,7 +1,7 @@
 <template>
   <v-container>
     <v-row align="start" justify="center" class="mt-5">
-      <v-col class="text-center" md="3">
+      <v-col class="text-center my-style">
         <h1 class="m-5">Iniciar sesión</h1>
         <v-form>
           <v-text-field
@@ -16,9 +16,7 @@
             label="Contraseña"
             outlined
           />
-          <v-btn color="primary lighten-2" class="mt-3" @click="onSubmit"
-            >submit</v-btn
-          >
+          <v-btn color="primary" class="mt-3" @click="onSubmit">Ingresar</v-btn>
         </v-form>
       </v-col>
     </v-row>
@@ -38,8 +36,15 @@ export default {
   methods: {
     async onSubmit() {
       const url = ''
+      await this.$auth
+        .loginWith('local', { data: this.form })
+        .then((res) => {})
+        .catch((e) => {})
       await this.$axios
-        .$post(url)
+        .$post(url, {
+          email: this.form.email,
+          password: this.form.password
+        })
         .then((res) => {})
         .catch((e) => {})
     }

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-navigation-drawer v-model="sidebar" app>
+    <v-navigation-drawer v-if="sidebar" v-model="sidebar" app>
       <span>
         <v-app-bar-nav-icon class="mt-3 ml-5" @click="sidebar = !sidebar" />
       </span>
