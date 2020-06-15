@@ -1,0 +1,17 @@
+{
+    "projectName": "educhay",
+    "version": "3.0",
+    "frontend": "javascript",
+    "javascript": {
+        "framework": "vue",
+        "config": {
+            "SourceDir": "src",
+            "DistributionDir": "/",
+            "BuildCommand": "npm.cmd run-script build",
+            "StartCommand": "npm.cmd run-script serve"
+        }
+    },
+    "providers": [
+        "awscloudformation"
+    ]
+}
