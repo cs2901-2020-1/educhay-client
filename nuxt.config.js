@@ -37,7 +37,7 @@ export default {
   /*
    ** Plugins to load before mounting the App
    */
-  plugins: [{ src: "~/plugins/amplify.js", mode: "client" }],
+  plugins: [{ src: '~/plugins/amplify.js', mode: 'client' }],
   /*
    ** Nuxt.js dev-modules
    */
@@ -92,20 +92,5 @@ export default {
      ** You can extend webpack config here
      */
     extend(config, ctx) {}
-  },
-  auth: {
-    strategies: {
-      local: {
-        endpoints: {
-          login: {
-            url: '',
-            method: 'post'
-          }
-        }
-      }
-    }
-  },
-  router: {
-    middleware: ['auth']
   }
 }

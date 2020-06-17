@@ -1,120 +1,97 @@
 <template>
   <v-container>
-    <v-row align="start" justify="center" class="mt-5">
-      <v-col class="text-center my-style">
-        <h1 class="m-5">Registro</h1>
-        <v-form>
-          <!--
-          <v-text-field
-            v-model="form.name"
-            type="text"
-            label="Nombres"
-            outlined
-          />
-          <v-text-field
-            v-model="form.lastName"
-            type="text"
-            label="Apellidos"
-            outlined
-          />
-          <v-text-field
-            v-model="form.email"
+    <div>
+      <h1 class="mb-3">Register</h1>
+
+      <!-- Unauthenticated -->
+      <div v-if="!$auth.isAuthenticated">
+        <!-- Register -->
+
+        <form v-if="step === steps.register" @submit.prevent="register">
+          <input
+            v-model="registerForm.email"
             type="email"
-            label="Correo electronico"
-            outlined
+            placeholder="Email"
+            class="form-control"
           />
-          <v-text-field
-            v-model="form.schoolName"
-            type="text"
-            label="Colegio"
-            outlined
-          />
-          -->
-          <v-text-field
-            v-model="form.username"
-            type="text"
-            label="Nombre de usuario"
-            outlined
-          />
-          <v-text-field
-            v-model="form.password"
+          <input
+            v-model="registerForm.password"
             type="password"
-            label="Contraseña"
-            outlined
+            placeholder="Password"
+            class="form-control"
           />
-          <v-btn color="primary" class="mt-3" @click="onSubmit"
-            >Registrar</v-btn
-          >
-        </v-form>
-      </v-col>
-    </v-row>
+          <v-btn color="primary" class="mt-3" @click="onSubmit">Register</v-btn>
+        </form>
+
+        <!-- Confirm Registration -->
+        <form v-else @submit.prevent="confirm">
+          <input
+            v-model="confirmForm.email"
+            type="email"
+            placeholder="Email"
+            class="form-control"
+          />
+          <input
+            v-model="confirmForm.code"
+            placeholder="Code"
+            class="form-control"
+          />
+          <v-btn color="primary" class="mt-3" @click="onSubmit">Confirm</v-btn>
+        </form>
+
+        <nuxt-link to="/login">Si ya tienes una cuenta inicia sesion</nuxt-link>
+      </div>
+
+      <!-- Authenticated -->
+      <div v-else>
+        You're logged in as {{ $auth.email }}.
+        <button
+          class="button--green"
+          @click="$store.dispatch('amplifyauth/logout')"
+        >
+          Logout
+        </button>
+      </div>
+    </div>
   </v-container>
 </template>
 
 <script>
-import { validationMixin } from 'vuelidate'
-import { required, maxLength, email } from 'vuelidate/lib/validators'
+const steps = {
+  register: 'REGISTER',
+  confirm: 'CONFIRM'
+}
 export default {
-  auth: false,
-  mixins: [validationMixin],
-  validations: {
-    form: {
-      email: { required, email, maxLength: maxLength(10) },
-      password: { required, maxLength: maxLength(8) }
-    }
-  },
-  data() {
-    return {
-      form: {
-        // name: '',
-        // lastName: '',
-        // schoolName: '',
-        // email: '',
-        username: '',
-        password: ''
-      }
-    }
-  },
-  computed: {
-    emailErrors() {
-      const errors = []
-      if (!this.$v.form.email.$dirty) return errors
-      !this.$v.form.email.email && errors.push('Must be valid e-mail')
-      !this.$v.form.email.required && errors.push('E-mail is required')
-      return errors
+  data: () => ({
+    steps: { ...steps },
+    step: steps.register,
+    registerForm: {
+      email: '',
+      password: ''
     },
-    passwordErrors() {
-      const errors = []
-      if (!this.$v.form.password.$dirty) return errors
-      !this.$v.form.password.maxLength &&
-        errors.push('Password must be at least 8 characters long.')
-      return errors
+    confirmForm: {
+      email: '',
+      code: ''
     }
-  },
+  }),
   methods: {
-    onSubmit() {
-      console.log(JSON.stringify(this.form))
-      const url = ''
-      // this.$v.$touch()
-      this.$axios
-        .$post(url, {
-          // name: this.form.name,
-          // lastName: this.form.lastName,
-          // schoolName: this.form.schoolName,
-          // email: this.form.email,
-          username: this.username,
-          password: this.form.email
-        })
-        .then((res) => {})
-        .catch((e) => {})
-      // this.$auth.setUserToken().then(() => {})
+    async register() {
+      try {
+        await this.$store.dispatch('amplifyauth/register', this.registerForm)
+        this.confirmForm.email = this.registerForm.email
+        this.step = this.steps.confirm
+      } catch (error) {}
+    },
+    async confirm() {
+      try {
+        await this.$store.dispatch(
+          'amplifyauth/confirmRegistration',
+          this.confirmForm
+        )
+        await this.$store.dispatch('amplifyauth/login', this.registerForm)
+        this.$router.push('/')
+      } catch (error) {}
     }
   }
 }
 </script>
-
-<style>
-.my-style {
-  max-width: 420px;
-}
-</style>
