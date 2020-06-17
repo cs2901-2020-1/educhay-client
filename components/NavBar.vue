@@ -18,9 +18,9 @@
       </v-list>
     </v-navigation-drawer>
 
-    <v-app-bar>
+    <v-app-bar color="white">
       <!-- <span class="hidden-sm-and-up"> -->
-      <span>
+      <span class="hidden-sm-and-up">
         <v-app-bar-nav-icon @click="sidebar = !sidebar" />
       </span>
       <v-toolbar-title>
@@ -28,6 +28,8 @@
           {{ appTitle }}
         </nuxt-link>-->
         <b-img src="~/assets/logo.png" height="50" />
+        <small class="align-middle">En colaboración con</small>
+        <b-img src="~/assets/logo-utec.png" height="50" />
       </v-toolbar-title>
       <v-spacer />
       <v-toolbar-items class="hidden-xs-only">
@@ -40,18 +42,25 @@
   </div>
 </template>
 
+<style scoped>
+small {
+  font-size: 0.6em;
+  font-weight: bold;
+}
+</style>
+
 <script>
-  export default {
-    data() {
-      return {
-        appTitle: 'Educhay',
-        sidebar: false,
-        menuItems: [
-          { title: 'Home', path: '/', icon: 'mdi-home' },
-          { title: 'Registrarse', path: '/register', icon: 'mdi-face' },
-          { title: 'Iniciar sesion', path: '/login', icon: 'mdi-lock-open' }
-        ]
-      }
-    }
+export default {
+  data() {
+    return {
+      appTitle: "Educhay",
+      sidebar: false,
+      menuItems: [
+        { title: "Home", path: "/", icon: "mdi-home" },
+        { title: "Registrarse", path: "/register", icon: "mdi-face" },
+        { title: "Iniciar sesion", path: "/login", icon: "mdi-lock-open" }
+      ]
+    };
   }
+};
 </script>
