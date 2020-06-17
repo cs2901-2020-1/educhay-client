@@ -41,17 +41,17 @@
 </template>
 
 <script>
-export default {
-  data() {
-    return {
-      appTitle: 'Educhay',
-      sidebar: false,
-      menuItems: [
-        { title: 'Home', path: '/', icon: 'mdi-home' },
-        { title: 'Registrarse', path: '/register', icon: 'mdi-face' },
-        { title: 'Iniciar sesion', path: '/login', icon: 'mdi-lock-open' }
-      ]
+  export default {
+    data() {
+      return {
+        appTitle: 'Educhay',
+        sidebar: false,
+        menuItems: [
+          { title: 'Home', path: '/', icon: 'mdi-home' },
+          { title: 'Registrarse', path: '/register', icon: 'mdi-face' },
+          { title: 'Iniciar sesion', path: '/login', icon: 'mdi-lock-open' }
+        ]
+      }
     }
   }
-}
 </script>

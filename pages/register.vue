@@ -52,69 +52,69 @@
 </template>
 
 <script>
-import { validationMixin } from 'vuelidate'
-import { required, maxLength, email } from 'vuelidate/lib/validators'
-export default {
-  auth: false,
-  mixins: [validationMixin],
-  validations: {
-    form: {
-      email: { required, email, maxLength: maxLength(10) },
-      password: { required, maxLength: maxLength(8) }
-    }
-  },
-  data() {
-    return {
+  import { validationMixin } from 'vuelidate'
+  import { required, maxLength, email } from 'vuelidate/lib/validators'
+  export default {
+    auth: false,
+    mixins: [validationMixin],
+    validations: {
       form: {
-        // name: '',
-        // lastName: '',
-        // schoolName: '',
-        // email: '',
-        username: '',
-        password: ''
+        email: { required, email, maxLength: maxLength(10) },
+        password: { required, maxLength: maxLength(8) }
+      }
+    },
+    data() {
+      return {
+        form: {
+          // name: '',
+          // lastName: '',
+          // schoolName: '',
+          // email: '',
+          username: '',
+          password: ''
+        }
+      }
+    },
+    computed: {
+      emailErrors() {
+        const errors = []
+        if (!this.$v.form.email.$dirty) return errors
+        !this.$v.form.email.email && errors.push('Must be valid e-mail')
+        !this.$v.form.email.required && errors.push('E-mail is required')
+        return errors
+      },
+      passwordErrors() {
+        const errors = []
+        if (!this.$v.form.password.$dirty) return errors
+        !this.$v.form.password.maxLength &&
+          errors.push('Password must be at least 8 characters long.')
+        return errors
+      }
+    },
+    methods: {
+      onSubmit() {
+        console.log(JSON.stringify(this.form))
+        const url = ''
+        // this.$v.$touch()
+        this.$axios
+          .$post(url, {
+            // name: this.form.name,
+            // lastName: this.form.lastName,
+            // schoolName: this.form.schoolName,
+            // email: this.form.email,
+            username: this.username,
+            password: this.form.email
+          })
+          .then((res) => {})
+          .catch((e) => {})
+        // this.$auth.setUserToken().then(() => {})
       }
     }
-  },
-  computed: {
-    emailErrors() {
-      const errors = []
-      if (!this.$v.form.email.$dirty) return errors
-      !this.$v.form.email.email && errors.push('Must be valid e-mail')
-      !this.$v.form.email.required && errors.push('E-mail is required')
-      return errors
-    },
-    passwordErrors() {
-      const errors = []
-      if (!this.$v.form.password.$dirty) return errors
-      !this.$v.form.password.maxLength &&
-        errors.push('Password must be at least 8 characters long.')
-      return errors
-    }
-  },
-  methods: {
-    onSubmit() {
-      console.log(JSON.stringify(this.form))
-      const url = ''
-      // this.$v.$touch()
-      this.$axios
-        .$post(url, {
-          // name: this.form.name,
-          // lastName: this.form.lastName,
-          // schoolName: this.form.schoolName,
-          // email: this.form.email,
-          username: this.username,
-          password: this.form.email
-        })
-        .then((res) => {})
-        .catch((e) => {})
-      // this.$auth.setUserToken().then(() => {})
-    }
   }
-}
 </script>
 
 <style>
-.my-style {
-  max-width: 420px;
-}
+  .my-style {
+    max-width: 420px;
+  }
 </style>
