@@ -29,13 +29,13 @@
             label="Colegio"
             outlined
           />
-          -->
             <v-text-field
               v-model="form.username"
               type="text"
               label="Nombre de usuario"
               outlined
             />
+            -->
             <v-text-field
               v-model="form.password"
               type="password"
@@ -97,20 +97,22 @@ export default {
   },
   methods: {
     onSubmit() {
-      console.log(JSON.stringify(this.form));
-      const url = "";
+      const url = this.$store.state.base_url + "register";
       // this.$v.$touch()
       this.$axios
         .$post(url, {
-          // name: this.form.name,
-          // lastName: this.form.lastName,
+          nombre: this.form.name,
+          apellido: this.form.lastName,
           // schoolName: this.form.schoolName,
-          // email: this.form.email,
-          username: this.username,
+          email: this.form.email,
           password: this.form.email
         })
-        .then(res => {})
-        .catch(e => {});
+        .then(res => {
+          console.log(res);
+        })
+        .catch(e => {
+          console.log(e);
+        });
       // this.$auth.setUserToken().then(() => {})
     }
   }
