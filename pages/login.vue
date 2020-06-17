@@ -24,36 +24,36 @@
 </template>
 
 <script>
-export default {
-  data() {
-    return {
-      form: {
-        email: '',
-        password: ''
+  export default {
+    data() {
+      return {
+        form: {
+          email: '',
+          password: ''
+        }
+      }
+    },
+    methods: {
+      async onSubmit() {
+        const url = ''
+        await this.$auth
+          .loginWith('local', { data: this.form })
+          .then((res) => {})
+          .catch((e) => {})
+        await this.$axios
+          .$post(url, {
+            email: this.form.email,
+            password: this.form.password
+          })
+          .then((res) => {})
+          .catch((e) => {})
       }
     }
-  },
-  methods: {
-    async onSubmit() {
-      const url = ''
-      await this.$auth
-        .loginWith('local', { data: this.form })
-        .then((res) => {})
-        .catch((e) => {})
-      await this.$axios
-        .$post(url, {
-          email: this.form.email,
-          password: this.form.password
-        })
-        .then((res) => {})
-        .catch((e) => {})
-    }
   }
-}
 </script>
 
 <style>
-.my-style {
-  max-width: 420px;
-}
+  .my-style {
+    max-width: 420px;
+  }
 </style>

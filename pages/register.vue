@@ -20,7 +20,7 @@
             placeholder="Password"
             class="form-control"
           />
-          <v-btn color="primary" class="mt-3" @click="onSubmit">Register</v-btn>
+          <v-btn type="sumbit" color="primary" class="mt-3">Register</v-btn>
         </form>
 
         <!-- Confirm Registration -->
@@ -36,7 +36,7 @@
             placeholder="Code"
             class="form-control"
           />
-          <v-btn color="primary" class="mt-3" @click="onSubmit">Confirm</v-btn>
+          <v-btn type="sumbit" color="primary" class="mt-3">Confirm</v-btn>
         </form>
 
         <nuxt-link to="/login">Si ya tienes una cuenta inicia sesion</nuxt-link>
@@ -57,41 +57,47 @@
 </template>
 
 <script>
-const steps = {
-  register: 'REGISTER',
-  confirm: 'CONFIRM'
-}
-export default {
-  data: () => ({
-    steps: { ...steps },
-    step: steps.register,
-    registerForm: {
-      email: '',
-      password: ''
-    },
-    confirmForm: {
-      email: '',
-      code: ''
-    }
-  }),
-  methods: {
-    async register() {
-      try {
-        await this.$store.dispatch('amplifyauth/register', this.registerForm)
-        this.confirmForm.email = this.registerForm.email
-        this.step = this.steps.confirm
-      } catch (error) {}
-    },
-    async confirm() {
-      try {
-        await this.$store.dispatch(
-          'amplifyauth/confirmRegistration',
-          this.confirmForm
-        )
-        await this.$store.dispatch('amplifyauth/login', this.registerForm)
-        this.$router.push('/')
-      } catch (error) {}
+  const steps = {
+    register: 'REGISTER',
+    confirm: 'CONFIRM'
+  }
+  export default {
+    data: () => ({
+      steps: { ...steps },
+      step: steps.register,
+      registerForm: {
+        email: '',
+        password: ''
+      },
+      confirmForm: {
+        email: '',
+        code: ''
+      }
+    }),
+    methods: {
+      async register() {
+        try {
+          await this.$store.dispatch('amplifyauth/register', this.registerForm)
+          this.confirmForm.email = this.registerForm.email
+          this.step = this.steps.confirm
+        } catch (error) {}
+      },
+      async confirm() {
+        try {
+          await this.$store.dispatch(
+            'amplifyauth/confirmRegistration',
+            this.confirmForm
+          )
+          await this.$store.dispatch('amplifyauth/login', this.registerForm)
+          this.$router.push('/')
+        } catch (error) {}
+      }
     }
   }
-}
 </script>
+
+<style>
+  .my-style {
+    max-width: 420px;
+  }
+</style>

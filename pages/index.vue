@@ -8,14 +8,14 @@
 </template>
 
 <script>
-export default {
-  auth: false
-}
+  export default {
+    auth: false
+  }
 </script>
 
 <style>
-.title {
-  padding: 3rem 1.5rem;
-  text-align: center;
-}
+  .title {
+    padding: 3rem 1.5rem;
+    text-align: center;
+  }
 </style>
