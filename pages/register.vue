@@ -105,7 +105,7 @@
             apellido: this.form.lastName,
             // schoolName: this.form.schoolName,
             email: this.form.email,
-            password: this.form.email
+            password: this.form.password
           })
           .then((res) => {
             console.log(res)
