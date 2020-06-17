@@ -56,71 +56,71 @@
 </template>
 
 <script>
-import { validationMixin } from "vuelidate";
-import { required, maxLength, email } from "vuelidate/lib/validators";
-export default {
-  auth: false,
-  mixins: [validationMixin],
-  validations: {
-    form: {
-      email: { required, email, maxLength: maxLength(10) },
-      password: { required, maxLength: maxLength(8) }
-    }
-  },
-  data() {
-    return {
+  import { validationMixin } from 'vuelidate'
+  import { required, maxLength, email } from 'vuelidate/lib/validators'
+  export default {
+    auth: false,
+    mixins: [validationMixin],
+    validations: {
       form: {
-        // name: '',
-        // lastName: '',
-        // schoolName: '',
-        // email: '',
-        username: "",
-        password: ""
+        email: { required, email, maxLength: maxLength(10) },
+        password: { required, maxLength: maxLength(8) }
       }
-    };
-  },
-  computed: {
-    emailErrors() {
-      const errors = [];
-      if (!this.$v.form.email.$dirty) return errors;
-      !this.$v.form.email.email && errors.push("Must be valid e-mail");
-      !this.$v.form.email.required && errors.push("E-mail is required");
-      return errors;
     },
-    passwordErrors() {
-      const errors = [];
-      if (!this.$v.form.password.$dirty) return errors;
-      !this.$v.form.password.maxLength &&
-        errors.push("Password must be at least 8 characters long.");
-      return errors;
-    }
-  },
-  methods: {
-    onSubmit() {
-      const url = this.$store.state.base_url + "register";
-      // this.$v.$touch()
-      this.$axios
-        .$post(url, {
-          nombre: this.form.name,
-          apellido: this.form.lastName,
-          // schoolName: this.form.schoolName,
-          email: this.form.email,
-          password: this.form.email
-        })
-        .then(res => {
-          console.log(res);
-        })
-        .catch(e => {
-          console.log(e);
-        });
-      // this.$auth.setUserToken().then(() => {})
+    data() {
+      return {
+        form: {
+          // name: '',
+          // lastName: '',
+          // schoolName: '',
+          // email: '',
+          username: '',
+          password: ''
+        }
+      }
+    },
+    computed: {
+      emailErrors() {
+        const errors = []
+        if (!this.$v.form.email.$dirty) return errors
+        !this.$v.form.email.email && errors.push('Must be valid e-mail')
+        !this.$v.form.email.required && errors.push('E-mail is required')
+        return errors
+      },
+      passwordErrors() {
+        const errors = []
+        if (!this.$v.form.password.$dirty) return errors
+        !this.$v.form.password.maxLength &&
+          errors.push('Password must be at least 8 characters long.')
+        return errors
+      }
+    },
+    methods: {
+      onSubmit() {
+        const url = this.$store.state.base_url + 'register'
+        // this.$v.$touch()
+        this.$axios
+          .$post(url, {
+            nombre: this.form.name,
+            apellido: this.form.lastName,
+            // schoolName: this.form.schoolName,
+            email: this.form.email,
+            password: this.form.email
+          })
+          .then((res) => {
+            console.log(res)
+          })
+          .catch((e) => {
+            console.log(e)
+          })
+        // this.$auth.setUserToken().then(() => {})
+      }
     }
   }
-};
 </script>
 
 <style>
-.my-style {
-  max-width: 420px;
-}
+  .my-style {
+    max-width: 420px;
+  }
 </style>
