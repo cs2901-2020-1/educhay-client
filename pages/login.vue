@@ -43,7 +43,7 @@
     },
     methods: {
       async onSubmit() {
-        const url = this.$store.state.base_url + 'login_temp'
+        const url = '/login_temp'
         // await this.$auth
         //   .loginWith('local', { data: this.form })
         //   .then((res) => {})
