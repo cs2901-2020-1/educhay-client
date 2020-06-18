@@ -97,7 +97,7 @@
     },
     methods: {
       onSubmit() {
-        const url = this.$store.state.base_url + 'register'
+        const url = '/register'
         // this.$v.$touch()
         this.$axios
           .$post(url, {
