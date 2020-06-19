@@ -57,7 +57,9 @@
         sidebar: false,
         menuItems: [
           { title: 'Home', path: '/', icon: 'mdi-home' },
+          { title: 'Subir', path: '/upload', icon: 'mdi-file-video' },
           { title: 'Videos', path: '/videos', icon: 'mdi-message-video' },
+          { title: 'Historial', path: '/history', icon: 'mdi-history' },
           { title: 'Registrarse', path: '/register', icon: 'mdi-face' },
           { title: 'Iniciar sesion', path: '/login', icon: 'mdi-lock-open' }
         ]

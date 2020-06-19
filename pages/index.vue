@@ -2,7 +2,7 @@
   <div class="parallax">
     <div id="title" class="title">
       <p>La plataforma de cursos más completa del país</p>
-      <h2>Aprende con <span class="logo">Educhay</span></h2>
+      <h2>Aprende con Educhay</h2>
     </div>
     <v-btn color="rgb(1, 166, 255)" class="enter">¡Ingresa ya!</v-btn>
   </div>
@@ -14,7 +14,7 @@
   }
 </script>
 
-<style>
+<style scoped>
   .logo {
     font-weight: 900;
     color: rgb(25, 84, 140);
