@@ -97,7 +97,7 @@
               <v-icon left dark>{{ item.icon }}</v-icon>
               {{ item.title }}
             </v-btn>
-            <v-btn text @click="logOut">
+            <v-btn text>
               <v-icon left dark>mdi-account-settings</v-icon>
               {{ this.$auth.user.nombre + ' ' + this.$auth.user.apellido }}
             </v-btn>
