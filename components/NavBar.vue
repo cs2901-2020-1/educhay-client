@@ -4,18 +4,31 @@
       <span>
         <v-app-bar-nav-icon class="mt-3 ml-5" @click="sidebar = !sidebar" />
       </span>
-      <v-list>
-        <v-list-item
-          v-for="item in menuItems"
-          :key="item.title"
-          :to="item.path"
-        >
-          <v-list-item-icon>
-            <v-icon>{{ item.icon }}</v-icon>
-          </v-list-item-icon>
-          <v-list-item-content>{{ item.title }}</v-list-item-content>
-        </v-list-item>
-      </v-list>
+      <template v-if="$auth.loggedIn">
+        <v-list>
+          <v-list-item>
+            <v-list-item-icon>
+              <v-btn onclick="() => {console.log('clicked')}">
+                <v-icon>mdi-logout</v-icon>
+              </v-btn>
+            </v-list-item-icon>
+          </v-list-item>
+        </v-list>
+      </template>
+      <template v-else>
+        <v-list>
+          <v-list-item
+            v-for="item in menuItems"
+            :key="item.title"
+            :to="item.path"
+          >
+            <v-list-item-icon>
+              <v-icon>{{ item.icon }}</v-icon>
+            </v-list-item-icon>
+            <v-list-item-content>{{ item.title }}</v-list-item-content>
+          </v-list-item>
+        </v-list>
+      </template>
     </v-navigation-drawer>
 
     <v-app-bar color="white">
@@ -32,12 +45,28 @@
         <b-img src="~/assets/logo-utec.png" height="50" />
       </v-toolbar-title>
       <v-spacer />
-      <v-toolbar-items class="hidden-xs-only">
-        <v-btn v-for="item in menuItems" :key="item.title" text :to="item.path">
-          <v-icon left dark>{{ item.icon }}</v-icon>
-          {{ item.title }}
-        </v-btn>
-      </v-toolbar-items>
+      <template v-if="$auth.loggedIn">
+        <v-list>
+          <v-list-item>
+            <v-list-item-icon>
+              <v-icon>mdi-logout</v-icon>
+            </v-list-item-icon>
+          </v-list-item>
+        </v-list>
+      </template>
+      <template v-else>
+        <v-toolbar-items class="hidden-xs-only">
+          <v-btn
+            v-for="item in menuItems"
+            :key="item.title"
+            text
+            :to="item.path"
+          >
+            <v-icon left dark>{{ item.icon }}</v-icon>
+            {{ item.title }}
+          </v-btn>
+        </v-toolbar-items>
+      </template>
     </v-app-bar>
   </div>
 </template>

@@ -6,13 +6,13 @@
           <h1 class="m-5">Registro</h1>
           <v-form>
             <v-text-field
-              v-model="form.name"
+              v-model="form.nombre"
               type="text"
               label="Nombres"
               outlined
             />
             <v-text-field
-              v-model="form.lastName"
+              v-model="form.apellido"
               type="text"
               label="Apellidos"
               outlined
@@ -70,11 +70,11 @@
     data() {
       return {
         form: {
-          // name: '',
-          // lastName: '',
+          nombre: '',
+          apellido: '',
           // schoolName: '',
-          // email: '',
-          username: '',
+          email: '',
+          // username: '',
           password: ''
         }
       }
@@ -97,16 +97,10 @@
     },
     methods: {
       onSubmit() {
-        const url = this.$store.state.base_url + 'register'
+        const url = '/register'
         // this.$v.$touch()
         this.$axios
-          .$post(url, {
-            nombre: this.form.name,
-            apellido: this.form.lastName,
-            // schoolName: this.form.schoolName,
-            email: this.form.email,
-            password: this.form.password
-          })
+          .$post(url, this.form)
           .then((res) => {
             console.log(res)
           })
