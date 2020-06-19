@@ -49,7 +49,11 @@
         </div>
       </v-col>
       <v-col md="8" class="hidden-sm-and-down p-0" align="flex-end">
-        <b-img src="~/assets/class3.jpg" fluid-grow class="p-0"></b-img>
+        <b-img
+          src="~/assets/class3.jpg"
+          fluid-grow
+          class="p-0 registerp"
+        ></b-img>
       </v-col>
     </v-row>
   </v-container>
@@ -126,5 +130,9 @@
 <style>
   .my-style {
     max-width: 420px;
+  }
+
+  .registerp {
+    height: 94vh !important;
   }
 </style>
