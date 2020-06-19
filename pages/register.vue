@@ -107,6 +107,16 @@
           .catch((e) => {
             console.log(e)
           })
+        this.$auth
+          .loginWith('local', { data: this.form })
+          .then((res) => {
+            console.log(res)
+            this.$auth.setUser(this.form)
+            this.$router.push('/')
+          })
+          .catch((e) => {
+            console.log(e)
+          })
         // this.$auth.setUserToken().then(() => {})
       }
     }

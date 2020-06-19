@@ -8,9 +8,7 @@
         <v-list>
           <v-list-item>
             <v-list-item-icon>
-              <v-btn onclick="() => {console.log('clicked')}">
-                <v-icon>mdi-logout</v-icon>
-              </v-btn>
+              <v-icon>mdi-logout</v-icon>
             </v-list-item-icon>
           </v-list-item>
         </v-list>
@@ -46,13 +44,69 @@
       </v-toolbar-title>
       <v-spacer />
       <template v-if="$auth.loggedIn">
-        <v-list>
-          <v-list-item>
-            <v-list-item-icon>
-              <v-icon>mdi-logout</v-icon>
-            </v-list-item-icon>
-          </v-list-item>
-        </v-list>
+        <template v-if="$auth.user.is_admin">
+          <v-toolbar-items class="hidden-xs-only">
+            <v-btn
+              v-for="item in menuItemsProfesor"
+              :key="item.title"
+              text
+              :to="item.path"
+            >
+              <v-icon left dark>{{ item.icon }}</v-icon>
+              {{ item.title }}
+            </v-btn>
+            <v-btn text @click="logOut">
+              <v-icon left dark>mdi-account-settings</v-icon>
+              {{ this.$auth.user.nombre + ' ' + this.$auth.user.apellido }}
+            </v-btn>
+            <v-btn text @click="logOut">
+              <v-icon left dark>mdi-logout</v-icon>
+              Cerrar sesión
+            </v-btn>
+          </v-toolbar-items>
+        </template>
+        <template v-else-if="$auth.user.is_profe">
+          <v-toolbar-items class="hidden-xs-only">
+            <v-btn
+              v-for="item in menuItemsProfesor"
+              :key="item.title"
+              text
+              :to="item.path"
+            >
+              <v-icon left dark>{{ item.icon }}</v-icon>
+              {{ item.title }}
+            </v-btn>
+            <v-btn text @click="logOut">
+              <v-icon left dark>mdi-account-settings</v-icon>
+              {{ this.$auth.user.nombre + ' ' + this.$auth.user.apellido }}
+            </v-btn>
+            <v-btn text @click="logOut">
+              <v-icon left dark>mdi-logout</v-icon>
+              Cerrar sesión
+            </v-btn>
+          </v-toolbar-items>
+        </template>
+        <template v-else>
+          <v-toolbar-items class="hidden-xs-only">
+            <v-btn
+              v-for="item in menuItemsLoggedin"
+              :key="item.title"
+              text
+              :to="item.path"
+            >
+              <v-icon left dark>{{ item.icon }}</v-icon>
+              {{ item.title }}
+            </v-btn>
+            <v-btn text @click="logOut">
+              <v-icon left dark>mdi-account-settings</v-icon>
+              {{ this.$auth.user.nombre + ' ' + this.$auth.user.apellido }}
+            </v-btn>
+            <v-btn text @click="logOut">
+              <v-icon left dark>mdi-logout</v-icon>
+              Cerrar sesión
+            </v-btn>
+          </v-toolbar-items>
+        </template>
       </template>
       <template v-else>
         <v-toolbar-items class="hidden-xs-only">
@@ -84,12 +138,34 @@
       return {
         appTitle: 'Educhay',
         sidebar: false,
-        menuItems: [
+        menuItemsLoggedin: [
           { title: 'Home', path: '/', icon: 'mdi-home' },
           { title: 'Videos', path: '/videos', icon: 'mdi-message-video' },
+          { title: 'Historial', path: '/history', icon: 'mdi-history' }
+        ],
+        menuItems: [
+          { title: 'Home', path: '/', icon: 'mdi-home' },
           { title: 'Registrarse', path: '/register', icon: 'mdi-face' },
           { title: 'Iniciar sesion', path: '/login', icon: 'mdi-lock-open' }
+        ],
+        menuItemsProfesor: [
+          { title: 'Home', path: '/', icon: 'mdi-home' },
+          { title: 'Subir', path: '/upload', icon: 'mdi-file-video' },
+          { title: 'Videos', path: '/videos', icon: 'mdi-message-video' },
+          { title: 'Historial', path: '/history', icon: 'mdi-history' }
+        ],
+        menuItemsAdmin: [
+          { title: 'Home', path: '/', icon: 'mdi-home' },
+          { title: 'Subir', path: '/upload', icon: 'mdi-file-video' },
+          { title: 'Videos', path: '/videos', icon: 'mdi-message-video' },
+          { title: 'Historial', path: '/history', icon: 'mdi-history' }
         ]
+      }
+    },
+    methods: {
+      logOut() {
+        console.log('aea')
+        this.$auth.logout()
       }
     }
   }

@@ -50,6 +50,7 @@
           .then((res) => {
             console.log(res)
             this.$auth.setUser(res.data)
+            this.$router.push('/')
           })
           .catch((e) => {
             console.log(e)

@@ -99,8 +99,8 @@ export default {
     strategies: {
       local: {
         endpoints: {
-          login: { url: '/login_temp', method: 'post' },
-          logout: { url: '', method: 'post' }
+          login: { url: '/login_temp', method: 'post' }
+          // logout: { url: '', method: 'post' }
         },
         autoFetchUser: false
       }

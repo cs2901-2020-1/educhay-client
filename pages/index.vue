@@ -1,17 +1,16 @@
 <template>
   <div>
-    <template v-if="$auth.loggedIn">
-      <p>logged in</p>
-    </template>
-    <template v-else>
-      <div class="parallax">
-        <div id="title" class="title">
-          <p>La plataforma de cursos más completa del país</p>
-          <h2>Aprende con <span class="logo">Educhay</span></h2>
-        </div>
-        <v-btn color="rgb(1, 166, 255)" class="enter">¡Ingresa ya!</v-btn>
+    <div class="parallax">
+      <div id="title" class="title">
+        <p>La plataforma de cursos más completa del país</p>
+        <h2>Aprende con Educhay</h2>
       </div>
-    </template>
+      <template v-if="!$auth.loggedIn">
+        <v-btn color="rgb(1, 166, 255)" class="enter" to="/register">
+          ¡Registrate ya!
+        </v-btn>
+      </template>
+    </div>
   </div>
 </template>
 
@@ -21,7 +20,7 @@
   }
 </script>
 
-<style>
+<style scoped>
   .logo {
     font-weight: 900;
     color: rgb(25, 84, 140);
