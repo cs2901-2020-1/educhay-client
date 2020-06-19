@@ -18,6 +18,9 @@
     "@nuxtjs/axios": "^5.11.0",
     "@nuxtjs/dotenv": "^1.4.0",
     "bootstrap-vue": "^2.15.0",
+    "devextreme": "20.1.4",
+    "devextreme-vue": "20.1.4",
+    "jquery": "^3.5.1",
     "nuxt": "^2.0.0",
     "vuelidate": "^0.7.5"
   },
