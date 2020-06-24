@@ -6,13 +6,13 @@
           <h1 class="m-5">Registro</h1>
           <v-form>
             <v-text-field
-              v-model="form.name"
+              v-model="form.nombre"
               type="text"
               label="Nombres"
               outlined
             />
             <v-text-field
-              v-model="form.lastName"
+              v-model="form.apellido"
               type="text"
               label="Apellidos"
               outlined
@@ -49,7 +49,11 @@
         </div>
       </v-col>
       <v-col md="8" class="hidden-sm-and-down p-0" align="flex-end">
-        <b-img src="~/assets/class3.jpg" fluid-grow class="p-0"></b-img>
+        <b-img
+          src="~/assets/class3.jpg"
+          fluid-grow
+          class="p-0 registerp"
+        ></b-img>
       </v-col>
     </v-row>
   </v-container>
@@ -70,11 +74,11 @@
     data() {
       return {
         form: {
-          // name: '',
-          // lastName: '',
+          nombre: '',
+          apellido: '',
           // schoolName: '',
-          // email: '',
-          username: '',
+          email: '',
+          // username: '',
           password: ''
         }
       }
@@ -97,18 +101,22 @@
     },
     methods: {
       onSubmit() {
-        const url = this.$store.state.base_url + 'register'
+        const url = '/register'
         // this.$v.$touch()
         this.$axios
-          .$post(url, {
-            nombre: this.form.name,
-            apellido: this.form.lastName,
-            // schoolName: this.form.schoolName,
-            email: this.form.email,
-            password: this.form.password
-          })
+          .$post(url, this.form)
           .then((res) => {
             console.log(res)
+          })
+          .catch((e) => {
+            console.log(e)
+          })
+        this.$auth
+          .loginWith('local', { data: this.form })
+          .then((res) => {
+            console.log(res)
+            this.$auth.setUser(this.form)
+            this.$router.push('/')
           })
           .catch((e) => {
             console.log(e)
@@ -122,5 +130,9 @@
 <style>
   .my-style {
     max-width: 420px;
+  }
+
+  .registerp {
+    height: 94vh !important;
   }
 </style>

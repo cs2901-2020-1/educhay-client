@@ -1,10 +1,16 @@
 <template>
-  <div class="parallax">
-    <div id="title" class="title">
-      <p>La plataforma de cursos más completa del país</p>
-      <h2>Aprende con Educhay</h2>
+  <div>
+    <div class="parallax">
+      <div id="title" class="title">
+        <p>La plataforma de cursos más completa del país</p>
+        <h2>Aprende con Educhay</h2>
+      </div>
+      <template v-if="!$auth.loggedIn">
+        <v-btn color="rgb(1, 166, 255)" class="enter" to="/register">
+          ¡Registrate ya!
+        </v-btn>
+      </template>
     </div>
-    <v-btn color="rgb(1, 166, 255)" class="enter">¡Ingresa ya!</v-btn>
   </div>
 </template>
 
