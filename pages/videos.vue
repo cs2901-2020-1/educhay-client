@@ -148,18 +148,9 @@
 <script>
   export default {
     auth: false,
-    async asyncData() {
-      console.log('entre async')
-      const url = '/unidades'
-      const data = await axios.get(url)
-      /* .then((response) => {
-            console.log(response)
-            //this.data = response
-          })
-          .catch((e) => {
-            console.log(e)
-          }) */
-      return data
+    fetch() {
+      console.log('fetching')
+      this.onSubmit()
     },
     data() {
       return {
@@ -305,6 +296,7 @@
     methods: {
       async onSubmit() {
         const url = '/unidades'
+        console.log('onsubmit')
         await this.$axios
           .$get(url)
           .then((response) => {
