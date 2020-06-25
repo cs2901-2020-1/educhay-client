@@ -1,7 +1,26 @@
-<template> </template>
+<template>
+  <v-row justify="center" align="center">
+    <div>
+      <iframe
+        width="560"
+        height="315"
+        :src="'https://www.youtube.com/embed/' + id"
+        frameborder="0"
+        allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+        allowfullscreen
+      ></iframe>
+    </div>
+  </v-row>
+</template>
 
 <script>
-  export default {}
+  export default {
+    data() {
+      return {
+        id: this.$route.params.id
+      }
+    }
+  }
 </script>
 
 <style></style>
