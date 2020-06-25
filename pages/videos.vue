@@ -26,11 +26,7 @@
                       </v-expansion-panel-header>
                       <v-expansion-panel-content>
                         <v-row>
-                          <v-card
-                            :loading="loading"
-                            class="mx-auto my-12"
-                            max-width="374"
-                          >
+                          <v-card class="mx-auto my-12" max-width="374">
                             <v-img
                               height="250"
                               src="https://content.gnoss.ws/imagenesEnlaces/ab/ab79/ab79ad08-e602-42a9-8c88-56e154b78300/ab79ad08-e602-42a9-8c88-56e154b78300.jpg?1"
@@ -60,20 +56,12 @@
                             <v-divider class="mx-4"></v-divider>
 
                             <v-card-actions>
-                              <v-btn
-                                color="deep-purple lighten-2"
-                                text
-                                @click="reserve"
-                              >
+                              <v-btn color="deep-purple lighten-2" text>
                                 Guardar
                               </v-btn>
                             </v-card-actions>
                           </v-card>
-                          <v-card
-                            :loading="loading"
-                            class="mx-auto my-12"
-                            max-width="374"
-                          >
+                          <v-card class="mx-auto my-12" max-width="374">
                             <v-img
                               height="250"
                               src="https://content.gnoss.ws/imagenesEnlaces/ab/ab79/ab79ad08-e602-42a9-8c88-56e154b78300/ab79ad08-e602-42a9-8c88-56e154b78300.jpg?1"
@@ -103,20 +91,12 @@
                             <v-divider class="mx-4"></v-divider>
 
                             <v-card-actions>
-                              <v-btn
-                                color="deep-purple lighten-2"
-                                text
-                                @click="reserve"
-                              >
+                              <v-btn color="deep-purple lighten-2" text>
                                 Guardar
                               </v-btn>
                             </v-card-actions>
                           </v-card>
-                          <v-card
-                            :loading="loading"
-                            class="mx-auto my-12"
-                            max-width="374"
-                          >
+                          <v-card class="mx-auto my-12" max-width="374">
                             <v-img
                               height="250"
                               src="https://content.gnoss.ws/imagenesEnlaces/ab/ab79/ab79ad08-e602-42a9-8c88-56e154b78300/ab79ad08-e602-42a9-8c88-56e154b78300.jpg?1"
@@ -146,11 +126,7 @@
                             <v-divider class="mx-4"></v-divider>
 
                             <v-card-actions>
-                              <v-btn
-                                color="deep-purple lighten-2"
-                                text
-                                @click="reserve"
-                              >
+                              <v-btn color="deep-purple lighten-2" text>
                                 Guardar
                               </v-btn>
                             </v-card-actions>
@@ -172,6 +148,19 @@
 <script>
   export default {
     auth: false,
+    async asyncData() {
+      console.log('entre async')
+      const url = '/unidades'
+      const data = await axios.get(url)
+      /* .then((response) => {
+            console.log(response)
+            //this.data = response
+          })
+          .catch((e) => {
+            console.log(e)
+          }) */
+      return data
+    },
     data() {
       return {
         grados: [
@@ -315,7 +304,16 @@
     },
     methods: {
       async onSubmit() {
-        await this.$axios.$get()
+        const url = '/unidades'
+        await this.$axios
+          .$get(url)
+          .then((response) => {
+            console.log(response)
+            this.data = response
+          })
+          .catch((e) => {
+            console.log(e)
+          })
       }
     }
   }

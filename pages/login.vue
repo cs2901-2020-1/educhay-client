@@ -2,7 +2,11 @@
   <v-container fluid class="p-0">
     <v-row align="start">
       <v-col md="8" class="hidden-sm-and-down p-0" align="flex-start">
-        <b-img src="~/assets/login1.png" fluid-grow class="p-0"></b-img>
+        <b-img
+          src="~/assets/login1.png"
+          fluid-grow
+          class="p-0 registerp"
+        ></b-img>
         <!--<v-img src="~/assets/login1.png" aspect-ratio="1"></v-img> -->
       </v-col>
       <v-col sm="12" md="4" align="center" justify="center">
@@ -33,6 +37,7 @@
 
 <script>
   export default {
+    auth: false,
     data() {
       return {
         form: {
@@ -43,22 +48,28 @@
     },
     methods: {
       async onSubmit() {
-        const url = this.$store.state.base_url + 'login_temp'
-        // await this.$auth
-        //   .loginWith('local', { data: this.form })
-        //   .then((res) => {})
-        //   .catch((e) => {})
-        await this.$axios
-          .$post(url, {
-            email: this.form.email,
-            password: this.form.password
-          })
+        // const url = this.$store.state.base_url + 'login_temp'
+        await this.$auth
+          .loginWith('local', { data: this.form })
           .then((res) => {
             console.log(res)
+            this.$auth.setUser(res.data)
+            this.$router.push('/')
           })
           .catch((e) => {
             console.log(e)
           })
+        // await this.$axios
+        //   .$post(url, {
+        //     email: this.form.email,
+        //     password: this.form.password
+        //   })
+        //   .then((res) => {
+        //     console.log(res)
+        //   })
+        //   .catch((e) => {
+        //     console.log(e)
+        //   })
       }
     }
   }
@@ -70,5 +81,9 @@
     display: flex;
     flex-direction: column;
     height: 80vh;
+  }
+
+  .registerp {
+    height: 94vh !important;
   }
 </style>

@@ -62,7 +62,7 @@ export default {
    ** See https://axios.nuxtjs.org/options
    */
   axios: {
-    baseURL: 'http://localhost:8080/'
+    baseURL: 'http://localhost:8080'
   },
   /*
    ** vuetify module configuration
@@ -95,20 +95,17 @@ export default {
      */
     extend(config, ctx) {}
   },
-  /*
   auth: {
     strategies: {
       local: {
         endpoints: {
-          login: {
-            url: '',
-            method: 'post'
-          }
-        }
+          login: { url: '/login_temp', method: 'post' }
+          // logout: { url: '', method: 'post' }
+        },
+        autoFetchUser: false
       }
     }
   },
-  */
   router: {
     middleware: ['auth']
   }
