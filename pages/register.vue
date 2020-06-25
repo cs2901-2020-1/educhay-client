@@ -100,10 +100,10 @@
       }
     },
     methods: {
-      onSubmit() {
+      async onSubmit() {
         const url = '/register'
         // this.$v.$touch()
-        this.$axios
+        await this.$axios
           .$post(url, this.form)
           .then((res) => {
             console.log(res)

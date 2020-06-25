@@ -164,7 +164,6 @@
     },
     methods: {
       logOut() {
-        console.log('aea')
         this.$auth.logout()
       }
     }
