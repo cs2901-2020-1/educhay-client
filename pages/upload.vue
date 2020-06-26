@@ -82,7 +82,7 @@
         const url = '/videos/POST'
         await this.$axios
           .$post(url, {
-            creador_email: this.$auth.user.email,
+            creador_email: 'profe@utec.edu.pe',
             _unidad: this.form.unidad,
             url_stream:
               'https://www.youtube.com/embed/' +
@@ -111,8 +111,7 @@
           '&' +
           part
         await this.$axios.$get(url).then((res) => {
-          console.log(res.items[0].snippet.title)
-          if (res.items.length === 0) {
+          if (res.pageInfo.totalResults === 0) {
             this.message = 'error'
           } else {
             this.title = res.items[0].snippet.title
