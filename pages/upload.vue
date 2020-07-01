@@ -67,7 +67,7 @@
           link: '',
           unidad: ''
         },
-        apiKey: 'AIzaSyCBnpJSkavwngFfk9Jn9RyfJaUmePyRdkw',
+        apiKey: 'AIzaSyAMZy4Hg0tcdVkisz6o_BVwJLFWyuM4V_I',
         message: null,
         title: ''
       }
@@ -91,33 +91,34 @@
             url_download: ''
           })
           .then((res) => {
-            console.log('gaaaa')
+            console.log('correcto')
           })
           .catch((e) => {
-            console.log('geeeee')
+            console.log('error')
           })
       },
       async checkId() {
-        console.log(this.form.id)
+        //  const apiKey = 'key=' + this.data.apiKey
         const apiKey = 'key=' + this.apiKey
         const part = 'part=snippet'
+        const id = 'id=' + this.form.link.substr(this.form.link.length - 11)
         const url =
-          'https://www.googleapis.com/youtube/v3/videos' +
-          '?' +
+          'https://www.googleapis.com/youtube/v3/videos?' +
+          id +
+          '&' +
           apiKey +
           '&' +
-          'id=' +
-          this.form.link.substr(this.form.link.length - 11) +
-          '&' +
           part
-        await this.$axios.$get(url).then((res) => {
-          if (res.pageInfo.totalResults === 0) {
-            this.message = 'error'
-          } else {
-            this.title = res.items[0].snippet.title
-            this.message = 'success'
-          }
-        })
+        await this.$axios
+          .$get(url, { headers: { referer: 'https://localhost:3000/upload' } })
+          .then((res) => {
+            if (res.pageInfo.totalResults === 0) {
+              this.message = 'error'
+            } else {
+              this.title = res.items[0].snippet.title
+              this.message = 'success'
+            }
+          })
       }
     }
   }
