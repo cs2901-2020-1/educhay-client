@@ -1,0 +1,33 @@
+{
+	"providers": {
+		"awscloudformation": {
+			"AuthRoleName": "amplify-educhayclient1-dev-131557-authRole",
+			"UnauthRoleArn": "arn:aws:iam::519276788965:role/amplify-educhayclient1-dev-131557-unauthRole",
+			"AuthRoleArn": "arn:aws:iam::519276788965:role/amplify-educhayclient1-dev-131557-authRole",
+			"Region": "us-east-1",
+			"DeploymentBucketName": "amplify-educhayclient1-dev-131557-deployment",
+			"UnauthRoleName": "amplify-educhayclient1-dev-131557-unauthRole",
+			"StackName": "amplify-educhayclient1-dev-131557",
+			"StackId": "arn:aws:cloudformation:us-east-1:519276788965:stack/amplify-educhayclient1-dev-131557/c14de020-bafd-11ea-b4a9-126c97cb5bc1",
+			"AmplifyAppId": "d262daimz6q7ge"
+		}
+	},
+	"video": {
+		"educhayvod": {
+			"service": "video",
+			"serviceType": "video-on-demand",
+			"providerPlugin": "awscloudformation",
+			"providerMetadata": {
+				"s3TemplateURL": "https://s3.amazonaws.com/amplify-educhayclient1-dev-131557-deployment/amplify-cfn-templates/video/educhayvod-vod-workflow-template.yaml",
+				"logicalId": "videoeduchayvod"
+			},
+			"lastPushTimeStamp": "2020-06-30T18:23:11.982Z",
+			"output": {
+				"oVodOutputUrl": "educhayvod-dev-output-gf3i00yl.s3.us-east-1.amazonaws.com",
+				"oVODOutputS3": "educhayvod-dev-output-gf3i00yl",
+				"oVODInputS3": "educhayvod-dev-input-gf3i00yl"
+			},
+			"lastPushDirHash": "/8yvyi8fNcRPXUjBPE4Gc6BI/Kk="
+		}
+	}
+}
