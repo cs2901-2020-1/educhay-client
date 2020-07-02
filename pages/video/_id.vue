@@ -1,20 +1,5 @@
 <template>
   <v-container>
-    <v-row justify="center" align="center">
-      <div>
-        <v-breadcrumbs :items="items">
-          <template v-slot:divider>
-            <v-icon>mdi-forward</v-icon>
-          </template>
-        </v-breadcrumbs>
-
-        <v-breadcrumbs :items="items">
-          <template v-slot:divider>
-            <v-icon>mdi-chevron-right</v-icon>
-          </template>
-        </v-breadcrumbs>
-      </div>
-    </v-row>
     <v-row>
       <v-col xs="12" sm="12" md="7" align="center" justify="center">
         <div>
@@ -30,15 +15,33 @@
       </v-col>
       <v-col> </v-col>
     </v-row>
+    <v-row>
+      <div>
+        <v-rating v-model="rating"></v-rating>
+        <v-btn>Ratear</v-btn>
+      </div>
+    </v-row>
   </v-container>
 </template>
 
 <script>
   export default {
+    fetch() {
+      console.log(this.$route.params)
+      // const url = '/unit_videos/' + this.id
+      // await this.$axios
+      //   .$get(url)
+      //   .then((res) => {
+      //     console.log(res)
+      //   })
+      //   .catch((e) => {
+      //     console.error(e)
+      //   })
+    },
     data() {
       return {
         id: this.$route.params.id,
-        items: {}
+        rating: 0
       }
     }
   }

@@ -31,7 +31,12 @@
                             :key="video.id"
                             class="mx-auto my-12"
                             max-width="374"
-                            :to="'/video/' + video_id[index]"
+                            @click="
+                              $router.push({
+                                name: '/video/' + video_id[index],
+                                params: { video: video }
+                              })
+                            "
                           >
                             <v-img
                               height="250"
