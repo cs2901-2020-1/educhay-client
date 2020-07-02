@@ -23,15 +23,15 @@
         </div>
       </v-col>
       <v-col>
-        <v-list shaped>
-          <v-subheader>REPORTS</v-subheader>
+        <v-list shaped dense>
+          <v-subheader>Unidades dentro del curso</v-subheader>
           <v-list-item-group v-model="item" color="primary">
-            <v-list-item v-for="(item, i) in unidades" :key="i">
+            <v-list-item v-for="(item, i) in unidades.slice(0, 6)" :key="i">
               <v-list-item-icon>
-                <v-icon v-text="item.icon"></v-icon>
+                <v-icon>mdi-book-open-page-variant</v-icon>
               </v-list-item-icon>
               <v-list-item-content>
-                <v-list-item-title v-text="item.text"></v-list-item-title>
+                <v-list-item-title v-text="item.nombre"></v-list-item-title>
               </v-list-item-content>
             </v-list-item>
           </v-list-item-group>
@@ -142,8 +142,8 @@
       await this.$axios
         .$get(url)
         .then((response) => {
-          console.log(response)
-          this.unidades = response
+          console.log(response[this.items[0].text][this.items[1].text])
+          this.unidades = response[this.items[0].text][this.items[1].text]
         })
         .catch((e) => {
           console.log(e)
