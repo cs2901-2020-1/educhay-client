@@ -1,35 +1,33 @@
 /* eslint-disable */
 const AWS = require('aws-sdk');
 /* eslint-enable */
-const s3 = new AWS.S3({});
+const s3 = new AWS.S3({})
 
 /* eslint-disable */
 exports.handler = function (event, context) {
-/* eslint-enable */
+  /* eslint-enable */
 
-/*
+  /*
 Function that triggers on the output bucket.
 
 event.Records contains an array of S3 records that you can take action on.
 */
 
-
   event.Records.forEach((s3Record) => {
-    console.log(s3Record.s3.object.key);
-    const objectKey = s3Record.s3.object.key;
-    const bucketName = s3Record.s3.bucket.name;
+    console.log(s3Record.s3.object.key)
+    const objectKey = s3Record.s3.object.key
+    const bucketName = s3Record.s3.bucket.name
     const params = {
       Bucket: bucketName,
       Key: objectKey,
-      ACL: 'public-read',
-    };
+      ACL: 'public-read'
+    }
     s3.putObjectAcl(params, (err, data) => {
       if (err) {
-        console.log(err);
+        console.log(err)
       } else {
-        console.log(data);
+        console.log(data)
       }
-    });
-  });
-
-};
+    })
+  })
+}
