@@ -25,8 +25,8 @@
       <v-col>
         <v-list shaped dense>
           <v-subheader>Unidades dentro del curso</v-subheader>
-          <v-list-item-group v-model="item" color="primary">
-            <v-list-item v-for="(item, i) in unidades.slice(0, 6)" :key="i">
+          <v-list-item-group color="primary">
+            <v-list-item v-for="(item, i) in unidades" :key="i">
               <v-list-item-icon>
                 <v-icon>mdi-book-open-page-variant</v-icon>
               </v-list-item-icon>
@@ -143,7 +143,10 @@
         .$get(url)
         .then((response) => {
           console.log(response[this.items[0].text][this.items[1].text])
-          this.unidades = response[this.items[0].text][this.items[1].text]
+          this.unidades = response[this.items[0].text][
+            this.items[1].text
+          ].splice(0, 6)
+          // console.log(this.unidades)
         })
         .catch((e) => {
           console.log(e)
@@ -160,6 +163,11 @@
         comments: [],
         creador: '',
         unidades: {}
+      }
+    },
+    watch: {
+      sixUnits() {
+        return this.unidades.splice(0, 6)
       }
     },
     methods: {

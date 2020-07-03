@@ -114,7 +114,7 @@
         await this.$axios
           .$get(url)
           .then((response) => {
-            // console.log(response)
+            console.log(response)
             this.videos = response
           })
           .catch((e) => {
