@@ -1,88 +1,92 @@
 <template>
-  <v-row justify="center">
-    <v-col md="10">
-      <v-expansion-panels popout>
-        <v-expansion-panel v-for="(grado_object, grado) in data" :key="grado">
-          <v-expansion-panel-header>
-            {{ grado }}
-          </v-expansion-panel-header>
-          <v-expansion-panel-content>
-            <v-expansion-panels popout>
-              <v-expansion-panel
-                v-for="(curso_object, curso) in grado_object"
-                :key="curso"
-              >
-                <v-expansion-panel-header>
-                  {{ curso }}
-                </v-expansion-panel-header>
-                <v-expansion-panel-content>
-                  <v-expansion-panels popout>
-                    <v-expansion-panel
-                      v-for="unidad in curso_object"
-                      :key="unidad.nombre"
-                    >
-                      <v-expansion-panel-header @click="getVideos(unidad.id)">
-                        {{ unidad.nombre }}
-                      </v-expansion-panel-header>
-                      <v-expansion-panel-content>
-                        <v-row>
-                          <v-card
-                            v-for="(video, index) in videos"
-                            :key="video.id"
-                            class="mx-auto my-12"
-                            max-width="374"
-                            :to="'/video/' + video.id"
+  <v-row justify="center" class="mt-1 pl-3">
+    <v-col md="3" class="colorDarken">
+      <v-row justify="center" align="center" class="maxHeight">
+        <v-container>
+          <v-expansion-panels>
+            <v-expansion-panel
+              v-for="(grado_object, grado) in data"
+              :key="grado"
+            >
+              <v-expansion-panel-header>
+                {{ grado }}
+                <template v-slot:actions>
+                  <v-icon color="primary">$expand</v-icon>
+                </template>
+              </v-expansion-panel-header>
+              <v-expansion-panel-content>
+                <v-expansion-panels>
+                  <v-expansion-panel
+                    v-for="(curso_object, curso) in grado_object"
+                    :key="curso"
+                  >
+                    <v-expansion-panel-header>
+                      {{ curso }}
+                      <template v-slot:actions>
+                        <v-icon color="primary">$expand</v-icon>
+                      </template>
+                    </v-expansion-panel-header>
+                    <v-expansion-panel-content>
+                      <v-expansion-panels>
+                        <v-expansion-panel
+                          v-for="unidad in curso_object"
+                          :key="unidad.nombre"
+                        >
+                          <v-expansion-panel-header
+                            @click="getVideos(unidad.id)"
                           >
-                            <v-img
-                              height="250"
-                              :src="
-                                'https://img.youtube.com/vi/' +
-                                  video_id[index] +
-                                  '/0.jpg'
-                              "
-                            ></v-img>
+                            {{ unidad.nombre }}
+                            <template v-slot:actions>
+                              <v-icon color="primary">$expand</v-icon>
+                            </template>
+                          </v-expansion-panel-header>
+                        </v-expansion-panel>
+                      </v-expansion-panels>
+                    </v-expansion-panel-content>
+                  </v-expansion-panel>
+                </v-expansion-panels>
+              </v-expansion-panel-content>
+            </v-expansion-panel>
+          </v-expansion-panels>
+        </v-container>
+      </v-row>
+    </v-col>
+    <v-col md="9">
+      <v-row class="maxHeight">
+        <v-card
+          v-for="(video, index) in videos"
+          :key="video.id"
+          class="mx-auto my-4"
+          max-width="374"
+          :to="'/video/' + video.id"
+        >
+          <v-img
+            height="250"
+            :src="'https://img.youtube.com/vi/' + video_id[index] + '/0.jpg'"
+          ></v-img>
+          <v-card-title>{{ video.titulo }}</v-card-title>
+          <v-card-text>
+            <v-row align="center" class="mx-0">
+              <v-rating
+                :value="video.rating"
+                color="amber"
+                dense
+                half-increments
+                readonly
+                size="14"
+              ></v-rating>
 
-                            <v-card-title>{{ video.titulo }}</v-card-title>
+              <div class="grey--text ml-4">
+                {{ video.rating }}
+              </div>
+            </v-row>
 
-                            <v-card-text>
-                              <v-row align="center" class="mx-0">
-                                <v-rating
-                                  :value="4.5"
-                                  color="amber"
-                                  dense
-                                  half-increments
-                                  readonly
-                                  size="14"
-                                ></v-rating>
-
-                                <div class="grey--text ml-4">
-                                  {{ video.rating }}
-                                </div>
-                              </v-row>
-
-                              <div>
-                                {{ video.titulo }}
-                              </div>
-                            </v-card-text>
-
-                            <v-divider class="mx-4"></v-divider>
-
-                            <v-card-actions>
-                              <v-btn color="deep-purple lighten-2" text>
-                                Guardar
-                              </v-btn>
-                            </v-card-actions>
-                          </v-card>
-                        </v-row>
-                      </v-expansion-panel-content>
-                    </v-expansion-panel>
-                  </v-expansion-panels>
-                </v-expansion-panel-content>
-              </v-expansion-panel>
-            </v-expansion-panels>
-          </v-expansion-panel-content>
-        </v-expansion-panel>
-      </v-expansion-panels>
+            <div>
+              {{ video.titulo }}
+            </div>
+          </v-card-text>
+        </v-card>
+      </v-row>
     </v-col>
   </v-row>
 </template>
@@ -138,4 +142,33 @@
   }
 </script>
 
-<style></style>
+<style>
+  .colorDarken {
+    background-color: aliceblue;
+  }
+
+  .maxHeight {
+    max-height: 90vh;
+    overflow-y: auto;
+  }
+  /* width */
+  ::-webkit-scrollbar {
+    padding-top: 7px;
+    width: 7px;
+  }
+
+  /* Track */
+  ::-webkit-scrollbar-track {
+    background: #778bb6;
+  }
+
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    background: rgb(43, 116, 211);
+  }
+
+  /* Handle on hover */
+  ::-webkit-scrollbar-thumb:hover {
+    background: rgb(9, 45, 112);
+  }
+</style>

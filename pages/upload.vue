@@ -64,7 +64,6 @@
                         id="file"
                         :rules="rules"
                         accept="video/*"
-                        v-model="files"
                         color="blue accent-4"
                         counter
                         placeholder="Elegir video"
@@ -87,7 +86,7 @@
                             v-else-if="index === 2"
                             class="overline grey--text text--darken-3 mx-2"
                           >
-                            +{{ files.length - 2 }} File(s)
+                            +{{ files.length - 2 }} Archivos(s)
                           </span>
                         </template>
                       </v-file-input>
@@ -96,6 +95,8 @@
                           <v-col md="6">
                             <v-subheader class="pl-0">Rating</v-subheader>
                             <v-rating
+                              justify="center"
+                              align="center"
                               v-model="form.rating"
                               color="yellow darken-3"
                               background-color="grey darken-1"
@@ -108,14 +109,15 @@
                       </v-card-text>
                     </v-col>
                   </v-row>
-                  <v-row>
-                    <v-col offset-md="8">
-                      <v-card-actions>
-                        <v-spacer />
-                        <v-btn color="primary" @click="submitFile"
-                          >Enviar</v-btn
-                        >
-                      </v-card-actions>
+                  <v-row justify="center" align="center">
+                    <v-col md="6">
+                      <v-row justify="center" align="center">
+                        <v-card-actions>
+                          <v-btn color="primary" @click="submitFile"
+                            >Subir</v-btn
+                          >
+                        </v-card-actions>
+                      </v-row>
                     </v-col>
                   </v-row>
                 </v-container>
@@ -134,12 +136,12 @@
             </template>
             <v-card>
               <v-card-title>
-                <span class="headline">Ingresar video de YouTube</span>
+                <span class="headline">Subir video de YouTube</span>
                 <v-spacer />
                 <v-icon @click="showModal = false">mdi-window-close</v-icon>
               </v-card-title>
               <v-card-text>
-                <v-container>
+                <v-container class="pr-6 pl-6">
                   <v-row>
                     <v-col>
                       <v-row>
@@ -155,7 +157,7 @@
                           label="Link"
                           required
                         ></v-text-field>
-                        <v-btn @click="checkId">
+                        <v-btn @click="checkId" color="success">
                           Check
                         </v-btn>
                       </v-row>
@@ -195,6 +197,8 @@
                             <v-col md="6">
                               <v-subheader class="pl-0">Rating</v-subheader>
                               <v-rating
+                                justify="center"
+                                align="center"
                                 v-model="form.rating"
                                 color="yellow darken-3"
                                 background-color="grey darken-1"
@@ -208,22 +212,23 @@
                       </v-row>
                     </v-col>
                   </v-row>
-                  <v-row>
-                    <v-col v-if="message">
-                      <v-alert v-if="message === 'success'" type="success">
-                        Success
-                      </v-alert>
-                      <v-alert v-else-if="message === 'error'" type="error">
-                        Error
-                      </v-alert>
-                    </v-col>
-                    <v-col offset-md="8">
-                      <v-card-actions>
-                        <v-spacer />
-                        <v-btn color="primary" @click="uploadVideo"
-                          >Enviar</v-btn
-                        >
-                      </v-card-actions>
+                  <v-row justify="center" align="center">
+                    <v-col md="4">
+                      <v-row v-if="message">
+                        <v-alert v-if="message === 'success'" type="success">
+                          Success
+                        </v-alert>
+                        <v-alert v-else-if="message === 'error'" type="error">
+                          Error
+                        </v-alert>
+                      </v-row>
+                      <v-row justify="center" align="center">
+                        <v-card-actions>
+                          <v-btn color="primary" @click="uploadVideo"
+                            >Subir</v-btn
+                          >
+                        </v-card-actions>
+                      </v-row>
                     </v-col>
                   </v-row>
                 </v-container>
