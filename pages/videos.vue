@@ -1,5 +1,5 @@
 <template>
-  <v-row justify="center" class="mt-1 pl-3">
+  <v-row justify="center" class="mt-0 pl-3">
     <v-col md="3" class="colorDarken">
       <v-row justify="center" align="center" class="maxHeight">
         <v-container>

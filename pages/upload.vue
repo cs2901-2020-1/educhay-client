@@ -1,12 +1,12 @@
 <template>
-  <v-container>
-    <v-row justify="center" align="center" class="maxHeight">
+  <v-container class="maxHeight2 pt-0" fluid>
+    <v-row justify="center" align="center" class="min-vh-100">
       <!-- <button @click="authenticate().then(loadClient)">
       authorize and load
     </button>
     <button @click="execute()">execute</button> -->
-      <v-col xs="12" sm="12" md="6">
-        <v-row justify="center" align="center">
+      <v-col xs="12" sm="12" md="6" class="localVid">
+        <v-row justify="center" align="center" class="min-vh-100">
           <v-dialog v-model="showUpload" persistent max-width="600px">
             <template v-slot:activator="{ on, attrs }">
               <v-btn
@@ -69,7 +69,7 @@
                         placeholder="Elegir video"
                         prepend-icon="mdi-video"
                         :show-size="1000"
-                        @change="handleFileUpload"
+                        v-model="file"
                       >
                         <template v-slot:selection="{ index, text }">
                           <v-chip
@@ -126,8 +126,8 @@
           </v-dialog>
         </v-row>
       </v-col>
-      <v-col xs="12" sm="12" md="6">
-        <v-row justify="center" align="center">
+      <v-col xs="12" sm="12" md="6" class="youtubeVid">
+        <v-row justify="center" align="center" class="min-vh-100">
           <v-dialog v-model="showModal" persistent max-width="600px">
             <template v-slot:activator="{ on, attrs }">
               <v-btn color="error" dark v-bind="attrs" v-on="on">
@@ -453,7 +453,16 @@
 </script>
 
 <style>
-  .maxHeight {
-    height: 80vh;
+  .maxHeight2 {
+    height: 93vh;
+    overflow: hidden;
+  }
+
+  .localVid {
+    background-color: rgb(167, 218, 241);
+  }
+
+  .youtubeVid {
+    background-color: rgb(243, 188, 188);
   }
 </style>

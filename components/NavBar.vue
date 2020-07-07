@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="indexk">
     <v-navigation-drawer v-if="sidebar" v-model="sidebar" app>
       <span>
         <v-app-bar-nav-icon class="mt-3 ml-5" @click="sidebar = !sidebar" />
@@ -169,3 +169,9 @@
     }
   }
 </script>
+
+<style>
+  .indexk {
+    z-index: 1000;
+  }
+</style>
