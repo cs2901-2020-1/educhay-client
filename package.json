@@ -4,6 +4,11 @@
   "description": "plataforma educativa",
   "author": "Miguel Yurivilca",
   "private": true,
+  "browser": {
+    "fs": false,
+    "path": false,
+    "os": false
+  },
   "scripts": {
     "dev": "nuxt",
     "build": "nuxt build",
@@ -20,8 +25,12 @@
     "bootstrap-vue": "^2.15.0",
     "devextreme": "20.1.4",
     "devextreme-vue": "20.1.4",
+    "express": "^4.17.1",
+    "fs": "0.0.1-security",
     "jquery": "^3.5.1",
+    "nodemon": "^2.0.4",
     "nuxt": "^2.13.1",
+    "video.js": "^7.8.3",
     "vuelidate": "^0.7.5"
   },
   "devDependencies": {

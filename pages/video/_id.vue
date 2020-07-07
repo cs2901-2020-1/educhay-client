@@ -41,6 +41,9 @@
     <v-row>
       {{ creador }}
     </v-row>
+    <v-row>
+      {{ creador_nombre }}
+    </v-row>
     <v-row justify="center">
       <v-rating
         v-model="ratingVideo"
@@ -133,6 +136,7 @@
             }
           ]
           this.creador = res.creador_email
+          this.creador_nombre = res.creador_nombre + ' ' + res.creador_apellido
         })
         .catch((e) => {
           console.error(e)
@@ -162,6 +166,7 @@
         items: [],
         comments: [],
         creador: '',
+        creador_nombre: '',
         unidades: {}
       }
     },

@@ -115,7 +115,7 @@
           .$get(url)
           .then((response) => {
             console.log(response)
-            this.videos = response
+            this.videos = response.sort((a, b) => b.rating - a.rating)
           })
           .catch((e) => {
             console.log(e)
@@ -127,7 +127,7 @@
         await this.$axios
           .$get(url)
           .then((response) => {
-            // console.log(response)
+            console.log(response)
             this.data = response
           })
           .catch((e) => {

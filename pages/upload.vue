@@ -1,85 +1,161 @@
 <template>
-  <v-row justify="center" align="center">
-    <!-- <button @click="authenticate().then(loadClient)">
+  <v-container>
+    <v-row justify="center" align="center" class="maxHeight">
+      <!-- <button @click="authenticate().then(loadClient)">
       authorize and load
     </button>
     <button @click="execute()">execute</button> -->
-    <v-btn color="rgb(25, 84, 140)" large fab dark>
-      <v-icon>mdi-television</v-icon>
-    </v-btn>
-    <v-dialog v-model="showModal" persistent max-width="600px">
-      <template v-slot:activator="{ on, attrs }">
-        <v-btn color="primary" dark v-bind="attrs" v-on="on">
-          youtube
-        </v-btn>
-      </template>
-      <v-card>
-        <v-card-title>
-          <span class="headline">Formulario</span>
-          <v-spacer />
-          <v-icon @click="showModal = false">mdi-window-close</v-icon>
-        </v-card-title>
-        <v-card-text>
-          <v-container>
-            <v-row>
-              <v-col>
-                <v-text-field
-                  v-model="form.link"
-                  label="Link"
-                  required
-                ></v-text-field>
-              </v-col>
-              <v-col>
-                <v-btn @click="checkId">
-                  Check
-                </v-btn>
-              </v-col>
-              <v-col>
-                <v-text-field
-                  v-model="form.unidad"
-                  label="Unidad"
-                  required
-                ></v-text-field>
-              </v-col>
-            </v-row>
-            <v-row v-if="message">
-              <v-alert v-if="message === 'success'" type="success">
-                Success
-              </v-alert>
-              <v-alert v-else-if="message === 'error'" type="error">
-                Error
-              </v-alert>
-            </v-row>
-          </v-container>
-        </v-card-text>
-        <v-card-actions>
-          <v-spacer />
-          <v-btn color="blue darken-1" text @click="uploadVideo">Enviar</v-btn>
-        </v-card-actions>
-      </v-card>
-    </v-dialog>
-  </v-row>
+      <v-col xs="12" sm="12" md="6">
+        <v-row justify="center" align="center">
+          <v-btn color="rgb(25, 84, 140)" large fab dark>
+            <v-icon>mdi-television</v-icon>
+          </v-btn>
+        </v-row>
+      </v-col>
+      <v-col xs="12" sm="12" md="6">
+        <v-row justify="center" align="center">
+          <v-dialog v-model="showModal" persistent max-width="600px">
+            <template v-slot:activator="{ on, attrs }">
+              <v-btn color="error" dark v-bind="attrs" v-on="on">
+                youtube
+              </v-btn>
+            </template>
+            <v-card>
+              <v-card-title>
+                <span class="headline">Formulario</span>
+                <v-spacer />
+                <v-icon @click="showModal = false">mdi-window-close</v-icon>
+              </v-card-title>
+              <v-card-text>
+                <v-container>
+                  <v-row>
+                    <v-col>
+                      <v-text-field
+                        v-model="form.title"
+                        label="Título"
+                        required
+                      ></v-text-field>
+                      <v-text-field
+                        v-model="form.link"
+                        label="Link"
+                        required
+                      ></v-text-field>
+                      <v-select
+                        v-model="form.grado"
+                        :items="grados"
+                        :rules="[(v) => !!v || 'Debe seleccionar Grado']"
+                        label="Grado"
+                        required
+                      ></v-select>
+                      <v-select
+                        v-model="form.curso"
+                        :items="cursosPorGrado"
+                        :rules="[(v) => !!v || 'Debe seleccionar Curso']"
+                        label="Curso"
+                        required
+                      ></v-select>
+                      <v-select
+                        v-model="form.unidad"
+                        :items="unidadesPorCurso"
+                        :rules="[(v) => !!v || 'Debe seleccionar Unidad']"
+                        label="Unidad"
+                        required
+                      ></v-select>
+                      <v-card-text>
+                        <v-row>
+                          <v-col class="pr-4">
+                            <v-subheader class="pl-0">Rating</v-subheader>
+                            <v-slider
+                              v-model="form.rating"
+                              class="align-center"
+                              :max="slide.max"
+                              :min="slide.min"
+                              thumb-label="always"
+                            >
+                            </v-slider>
+                          </v-col>
+                        </v-row>
+                      </v-card-text>
+                    </v-col>
+                  </v-row>
+                  <v-row>
+                    <v-col>
+                      <v-btn @click="checkId">
+                        Check
+                      </v-btn>
+                    </v-col>
+                    <v-col v-if="message">
+                      <v-alert v-if="message === 'success'" type="success">
+                        Success
+                      </v-alert>
+                      <v-alert v-else-if="message === 'error'" type="error">
+                        Error
+                      </v-alert>
+                    </v-col>
+                  </v-row>
+                </v-container>
+              </v-card-text>
+              <v-card-actions>
+                <v-spacer />
+                <v-btn color="blue darken-1" text @click="uploadVideo"
+                  >Enviar</v-btn
+                >
+              </v-card-actions>
+            </v-card>
+          </v-dialog>
+        </v-row>
+      </v-col>
+    </v-row>
+  </v-container>
 </template>
 
 <script>
   export default {
     auth: false,
+    fetch() {
+      console.log('fetching')
+      this.onSubmit()
+    },
     data() {
       return {
+        slide: {
+          min: 0,
+          max: 5,
+          range: [0, 5]
+        },
         showModal: false,
         form: {
+          grado: '',
+          unidad: '',
+          curso: '',
           link: '',
-          unidad: ''
+          title: '',
+          rating: 5
         },
         apiKey: 'AIzaSyAMZy4Hg0tcdVkisz6o_BVwJLFWyuM4V_I',
         message: null,
-        title: ''
+        title: '',
+        grados: [],
+        cursos: [],
+        unidades: [],
+        datos: null
       }
     },
     computed: {
       getId() {
         return this.form.link.substr(this.form.link.length - 11)
-      }
+      } /* ,
+      cursosPorGrado() {
+        return this.cursos[
+          this.grados.findIndex((el) => el === this.form.grado)
+        ]
+      },
+      unidadesPorCurso() {
+        const cursoKey = this.form.curso
+        return this.cursos[
+          this.grados.findIndex((el) => el === this.form.grado)
+        ][cursoKey]
+      } */
     },
     mounted() {
       const extScript = document.createElement('script')
@@ -129,6 +205,26 @@
             this.message = 'success'
           }
         })
+      },
+      async onSubmit() {
+        const url = '/unidades'
+        // console.log('onsubmit')
+        await this.$axios
+          .$get(url)
+          .then((response) => {
+            console.log(response)
+            console.log('onSubmit')
+            this.datos = response
+            this.grados = Object.keys(response)
+            this.cursos = Object.values(Object.values(response))
+            this.unidades = Object.values(Object.values(response))
+            /* console.log(this.grados)
+            console.log(this.cursos)
+            console.log(this.unidades) */
+          })
+          .catch((e) => {
+            console.log(e)
+          })
       }
       /* authenticate() {
         return gapi.auth2
@@ -175,3 +271,9 @@
     }
   }
 </script>
+
+<style>
+  .maxHeight {
+    height: 80vh;
+  }
+</style>
