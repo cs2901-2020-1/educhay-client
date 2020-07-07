@@ -46,17 +46,19 @@
                         :rules="[(v) => !!v || 'Debe seleccionar Grado']"
                         label="Grado"
                         required
+                        @input="cursosPorGrado"
                       ></v-select>
                       <v-select
                         v-model="form.curso"
-                        :items="cursosPorGrado"
+                        :items="cursos"
                         :rules="[(v) => !!v || 'Debe seleccionar Curso']"
                         label="Curso"
                         required
+                        @input="unidadesPorCurso"
                       ></v-select>
                       <v-select
                         v-model="form.unidad"
-                        :items="unidadesPorCurso"
+                        :items="unidades"
                         :rules="[(v) => !!v || 'Debe seleccionar Unidad']"
                         label="Unidad"
                         required
@@ -136,26 +138,15 @@
         message: null,
         title: '',
         grados: [],
-        cursos: [],
-        unidades: [],
-        datos: null
+        cursos: null,
+        unidades: null,
+        datos: {}
       }
     },
     computed: {
       getId() {
         return this.form.link.substr(this.form.link.length - 11)
-      } /* ,
-      cursosPorGrado() {
-        return this.cursos[
-          this.grados.findIndex((el) => el === this.form.grado)
-        ]
-      },
-      unidadesPorCurso() {
-        const cursoKey = this.form.curso
-        return this.cursos[
-          this.grados.findIndex((el) => el === this.form.grado)
-        ][cursoKey]
-      } */
+      }
     },
     mounted() {
       const extScript = document.createElement('script')
@@ -166,6 +157,17 @@
       }) */
     },
     methods: {
+      cursosPorGrado() {
+        if (this.form.grado !== '') {
+          this.cursos = this.datos[this.form.grado]
+          console.log(this.cursos)
+        }
+      },
+      unidadesPorCurso() {
+        if (this.form.curso !== '') {
+          this.unidades = this.datos[this.form.grado][this.form.curso]
+        }
+      },
       async uploadVideo() {
         const url = '/videos/POST'
         await this.$axios
@@ -214,13 +216,18 @@
           .then((response) => {
             console.log(response)
             console.log('onSubmit')
-            this.datos = response
+            // this.datos = response
+            const dataMap = new Map()
             this.grados = Object.keys(response)
-            this.cursos = Object.values(Object.values(response))
-            this.unidades = Object.values(Object.values(response))
-            /* console.log(this.grados)
-            console.log(this.cursos)
-            console.log(this.unidades) */
+            // this.cursos = Object.values(Object.values(response))
+            for (let i = 0; i < this.grados.length; i++) {
+              dataMap.set(this.grados[i], this.cursos[i])
+            }
+            this.datos = dataMap
+            console.log(dataMap)
+            // console.log(this.grados)
+            // console.log(this.cursos)
+            // console.log(this.unidades)
           })
           .catch((e) => {
             console.log(e)
