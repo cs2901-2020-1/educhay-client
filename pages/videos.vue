@@ -56,7 +56,7 @@
         <v-card
           v-for="(video, index) in videos"
           :key="video.id"
-          class="mx-auto my-4"
+          class="mx-auto my-6"
           max-width="374"
           :to="'/video/' + video.id"
         >

@@ -66,6 +66,7 @@
                         accept="video/*"
                         color="blue accent-4"
                         counter
+                        small-chips
                         placeholder="Elegir video"
                         prepend-icon="mdi-video"
                         :show-size="1000"
@@ -86,7 +87,7 @@
                             v-else-if="index === 2"
                             class="overline grey--text text--darken-3 mx-2"
                           >
-                            +{{ files.length - 2 }} Archivos(s)
+                            +{{ files.length - 2 }} Archivo(s)
                           </span>
                         </template>
                       </v-file-input>
@@ -308,11 +309,14 @@
             }
           })
           .then((res) => {
-            this.urlUpload = res
+            console.log('Respuesta local')
+            console.log(res)
+            console.log(res.data)
+            this.urlUpload = res.data
             this.uploadLocalVideo()
           })
-          .catch(function() {
-            console.log('gee')
+          .catch((e) => {
+            console.log(e)
           })
       },
       handleFileUpload() {
@@ -341,7 +345,9 @@
         await this.$axios
           .$post(url, {
             creador_email: 'profe@utec.edu.pe',
-            _unidad: this.form.unidad.nombre,
+            _curso: this.form.curso,
+            _grado: this.form.grado,
+            _unidad: this.form.unidad,
             url_stream: this.urlUpload,
             titulo: this.form.title,
             url_download: ''
@@ -355,16 +361,20 @@
       },
       async uploadVideo() {
         const url = '/videos/POST'
+        const json = {
+          creador_email: 'profe@utec.edu.pe',
+          _curso: this.form.curso,
+          _grado: this.form.grado,
+          _unidad: this.form.unidad,
+          url_stream:
+            'https://www.youtube.com/embed/' +
+            this.form.link.substr(this.form.link.length - 11),
+          titulo: this.form.title,
+          url_download: ''
+        }
+        console.log(json)
         await this.$axios
-          .$post(url, {
-            creador_email: 'profe@utec.edu.pe',
-            _unidad: this.form.unidad,
-            url_stream:
-              'https://www.youtube.com/embed/' +
-              this.form.link.substr(this.form.link.length - 11),
-            titulo: this.title,
-            url_download: ''
-          })
+          .$post(url, json)
           .then((res) => {
             console.log('correcto')
           })
