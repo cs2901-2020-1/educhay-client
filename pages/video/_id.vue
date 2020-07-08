@@ -11,7 +11,7 @@
     </v-row>
     <v-row>
       <v-col xs="12" sm="12" md="7" align="center" justify="center">
-        <div>
+        <template v-if="isYoutube">
           <iframe
             width="560"
             height="315"
@@ -19,8 +19,11 @@
             frameborder="0"
             allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
             allowfullscreen
-          ></iframe>
-        </div>
+          />
+        </template>
+        <template v-else>
+          <video-player :options="videoOptions" />
+        </template>
       </v-col>
       <v-col>
         <v-list shaped dense>
@@ -56,7 +59,7 @@
 
       <v-dialog v-model="dialog" max-width="290">
         <v-card>
-          <v-card-title class="headline">Ratear</v-card-title>
+          <v-card-title class="headline">Calificar</v-card-title>
 
           <v-card-text>
             <v-rating v-model="ratingUser"></v-rating>
@@ -103,7 +106,10 @@
               </v-col>
               <v-col>
                 <v-row>
-                  <v-card-title>{{ comentario.email }}</v-card-title>
+                  <v-card-title
+                    >{{ comentario.nombre }}
+                    {{ comentario.apellido }}</v-card-title
+                  >
                 </v-row>
                 <v-row>
                   {{ comentario.content }}
@@ -118,7 +124,13 @@
 </template>
 
 <script>
+  import VideoPlayer from '@/components/VideoPlayer.vue'
+  import awsvideoconfig from '~/src/aws-video-exports'
+
   export default {
+    components: {
+      VideoPlayer
+    },
     async fetch() {
       console.log(this.$auth.user.email)
       console.log(Date.now())
@@ -126,6 +138,7 @@
       await this.$axios
         .$get(url)
         .then((res) => {
+          this.isYoutube = !res.url_stream.includes('amazon')
           console.log(res)
           this.comments = res.comments
           this.videoId = res.url_stream
@@ -177,7 +190,21 @@
         creador: '',
         creador_nombre: '',
         unidades: {},
-        comment: ''
+        comment: '',
+        isYoutube: true,
+        videoOptions: {
+          autoplay: false,
+          controls: true,
+          sources: [
+            {
+              src:
+                'https://' +
+                awsvideoconfig.awsOutputVideo +
+                '/1594190757035-2020-04-17_15-03-58/1594190757035-2020-04-17_15-03-58.m3u8',
+              type: 'application/x-mpegURL'
+            }
+          ]
+        }
       }
     },
     watch: {
@@ -203,27 +230,38 @@
         this.dialog = false
       },
       async submitComment() {
-        const url = '/comments/POST'
-        await this.$axios.$post(url, {
-          creador_email: this.$auth.user.email,
-          fecha: Date.now(),
-          video_id: this.id,
-          content: this.comment
-        })
-        // url = '/video/' + this.id
-        // await this.$axios
-        //   .get(url)
-        //   .then((res) => {
-        //     console.log(res)
-        //     this.comments = res.comments
-        //   })
-        //   .catch((e) => {
-        //     console.log(e)
-        //   })
+        let url = '/comments/POST'
+        await this.$axios
+          .$post(url, {
+            creador_email: this.$auth.user.email,
+            fecha: Date.now(),
+            video_id: this.id,
+            content: this.comment
+          })
+          .then((res) => {
+            console.log(res)
+          })
+          .catch((e) => {
+            console.log(e)
+          })
+        url = '/video/' + this.id
+        await this.$axios
+          .get(url)
+          .then((res) => {
+            console.log(res)
+            this.comments = res.data.comments
+          })
+          .catch((e) => {
+            console.log(e)
+          })
       }
     }
   }
 </script>
+
+<style>
+  @import 'node_modules/video.js/dist/video-js.css';
+</style>
 <!--
 <template>
   <div>
