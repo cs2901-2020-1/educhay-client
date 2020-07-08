@@ -80,12 +80,18 @@
       <v-avatar color="indigo">
         <v-icon dark>mdi-account-circle</v-icon>
       </v-avatar>
-      <v-text-field class="m-3" label="Solo" solo :hide-details="true" />
-      <v-btn>
+      <v-text-field
+        v-model="comment"
+        class="m-3"
+        label="Solo"
+        solo
+        :hide-details="true"
+      />
+      <v-btn @click="submitComment">
         Enviar
       </v-btn>
     </v-row>
-    <v-row>
+    <v-row v-for="comentario in comments" :key="comentario.key">
       <v-card :shaped="true">
         <v-card-text>
           <v-container>
@@ -97,10 +103,10 @@
               </v-col>
               <v-col>
                 <v-row>
-                  <v-card-title>usuario</v-card-title>
+                  <v-card-title>{{ comentario.email }}</v-card-title>
                 </v-row>
                 <v-row>
-                  Lorem ipsumsdfjasfdks jfsj lksafjls adjflasjl
+                  {{ comentario.content }}
                 </v-row>
               </v-col>
             </v-row>
@@ -114,11 +120,14 @@
 <script>
   export default {
     async fetch() {
+      console.log(this.$auth.user.email)
+      console.log(Date.now())
       let url = '/video/' + this.id
       await this.$axios
         .$get(url)
         .then((res) => {
           console.log(res)
+          this.comments = res.comments
           this.videoId = res.url_stream
           this.ratingVideo = res.rating
           this.items = [
@@ -167,7 +176,8 @@
         comments: [],
         creador: '',
         creador_nombre: '',
-        unidades: {}
+        unidades: {},
+        comment: ''
       }
     },
     watch: {
@@ -191,6 +201,25 @@
             console.log(e)
           })
         this.dialog = false
+      },
+      async submitComment() {
+        const url = '/comments/POST'
+        await this.$axios.$post(url, {
+          creador_email: this.$auth.user.email,
+          fecha: Date.now(),
+          video_id: this.id,
+          content: this.comment
+        })
+        // url = '/video/' + this.id
+        // await this.$axios
+        //   .get(url)
+        //   .then((res) => {
+        //     console.log(res)
+        //     this.comments = res.comments
+        //   })
+        //   .catch((e) => {
+        //     console.log(e)
+        //   })
       }
     }
   }

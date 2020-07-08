@@ -60,8 +60,9 @@
                         required
                       ></v-select>
                       <v-file-input
-                        ref="file"
                         id="file"
+                        ref="file"
+                        v-model="file"
                         :rules="rules"
                         accept="video/*"
                         color="blue accent-4"
@@ -70,7 +71,6 @@
                         placeholder="Elegir video"
                         prepend-icon="mdi-video"
                         :show-size="1000"
-                        v-model="file"
                       >
                         <template v-slot:selection="{ index, text }">
                           <v-chip
@@ -96,9 +96,9 @@
                           <v-col md="6">
                             <v-subheader class="pl-0">Rating</v-subheader>
                             <v-rating
+                              v-model="form.rating"
                               justify="center"
                               align="center"
-                              v-model="form.rating"
                               color="yellow darken-3"
                               background-color="grey darken-1"
                               empty-icon="$ratingFull"
@@ -158,7 +158,7 @@
                           label="Link"
                           required
                         ></v-text-field>
-                        <v-btn @click="checkId" color="success">
+                        <v-btn color="success" @click="checkId">
                           Check
                         </v-btn>
                       </v-row>
@@ -198,9 +198,9 @@
                             <v-col md="6">
                               <v-subheader class="pl-0">Rating</v-subheader>
                               <v-rating
+                                v-model="form.rating"
                                 justify="center"
                                 align="center"
-                                v-model="form.rating"
                                 color="yellow darken-3"
                                 background-color="grey darken-1"
                                 empty-icon="$ratingFull"
