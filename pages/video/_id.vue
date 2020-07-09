@@ -1,20 +1,38 @@
 <template>
-  <v-container>
-    <v-row justify="center" align="center">
-      <div>
-        <v-breadcrumbs :items="items">
-          <template v-slot:divider>
-            <v-icon>mdi-chevron-right</v-icon>
-          </template>
-        </v-breadcrumbs>
-      </div>
-    </v-row>
-    <v-row>
-      <v-col xs="12" sm="12" md="7" align="center" justify="center">
+  <v-container fluid>
+    <v-row justify="space-around" align="start">
+      <v-col md="3" align="start" justify="center">
+        <div>
+          <v-breadcrumbs :items="items" class="text-lg-h6 font-weight-black">
+            <template v-slot:divider>
+              <v-icon>mdi-chevron-right</v-icon>
+            </template>
+          </v-breadcrumbs>
+        </div>
+        <v-list shaped dense>
+          <v-subheader class="text-lg-h6 font-weight-black"
+            >Unidades dentro del curso</v-subheader
+          >
+          <v-list-item-group color="primary">
+            <v-list-item v-for="(item, i) in unidades" :key="i">
+              <v-list-item-icon>
+                <v-icon>mdi-book-open-page-variant</v-icon>
+              </v-list-item-icon>
+              <v-list-item-content>
+                <v-list-item-title
+                  v-text="item.nombre"
+                  class="text-sm-body-2 font-weight-black"
+                ></v-list-item-title>
+              </v-list-item-content>
+            </v-list-item>
+          </v-list-item-group>
+        </v-list>
+      </v-col>
+      <v-col xs="12" sm="12" md="8" align="center" justify="center">
         <template v-if="isYoutube">
           <iframe
-            width="560"
-            height="315"
+            width="1270"
+            height="830"
             :src="videoId"
             frameborder="0"
             allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
@@ -24,61 +42,69 @@
         <template v-else>
           <video-player :options="videoOptions" />
         </template>
+        <v-row justify="center" class="p-3">
+          <v-col>
+            <div class="text-lg-h4 font-weight-black">
+              {{ title }}
+            </div>
+            <v-row justify="center" align="center">
+              <v-col>
+                <div>
+                  {{ creador_nombre }}
+                  {{ creador }}
+                </div>
+              </v-col>
+              <v-col>
+                <v-row justify="center" align="center">
+                  <v-rating
+                    v-model="ratingVideo"
+                    half-increments
+                    :readonly="true"
+                  ></v-rating>
+                  <div class="font-weight-black m-3 text-md-body-1">
+                    ({{ views }}) vistas
+                  </div>
+                  <v-btn color="primary" dark @click.stop="dialog = true">
+                    Calificar
+                  </v-btn>
+
+                  <v-dialog v-model="dialog" max-width="290">
+                    <v-card>
+                      <v-card-title class="headline">Calificar</v-card-title>
+
+                      <v-card-text>
+                        <v-rating v-model="ratingUser"></v-rating>
+                      </v-card-text>
+
+                      <v-card-actions>
+                        <v-spacer></v-spacer>
+
+                        <v-btn
+                          color="green darken-1"
+                          text
+                          @click="dialog = false"
+                        >
+                          Cancelar
+                        </v-btn>
+
+                        <v-btn
+                          color="green darken-1"
+                          text
+                          @click="handleRating"
+                        >
+                          Aceptar
+                        </v-btn>
+                      </v-card-actions>
+                    </v-card>
+                  </v-dialog>
+                </v-row>
+              </v-col>
+            </v-row>
+          </v-col>
+        </v-row>
       </v-col>
-      <v-col>
-        <v-list shaped dense>
-          <v-subheader>Unidades dentro del curso</v-subheader>
-          <v-list-item-group color="primary">
-            <v-list-item v-for="(item, i) in unidades" :key="i">
-              <v-list-item-icon>
-                <v-icon>mdi-book-open-page-variant</v-icon>
-              </v-list-item-icon>
-              <v-list-item-content>
-                <v-list-item-title v-text="item.nombre"></v-list-item-title>
-              </v-list-item-content>
-            </v-list-item>
-          </v-list-item-group>
-        </v-list>
-      </v-col>
     </v-row>
-    <v-row>
-      {{ creador }}
-    </v-row>
-    <v-row>
-      {{ creador_nombre }}
-    </v-row>
-    <v-row justify="center">
-      <v-rating
-        v-model="ratingVideo"
-        half-increments
-        :readonly="true"
-      ></v-rating>
-      <v-btn color="primary" dark @click.stop="dialog = true">
-        Calificar
-      </v-btn>
 
-      <v-dialog v-model="dialog" max-width="290">
-        <v-card>
-          <v-card-title class="headline">Calificar</v-card-title>
-
-          <v-card-text>
-            <v-rating v-model="ratingUser"></v-rating>
-          </v-card-text>
-
-          <v-card-actions>
-            <v-spacer></v-spacer>
-
-            <v-btn color="green darken-1" text @click="dialog = false">
-              Cancelar
-            </v-btn>
-
-            <v-btn color="green darken-1" text @click="handleRating">
-              Aceptar
-            </v-btn>
-          </v-card-actions>
-        </v-card>
-      </v-dialog>
-    </v-row>
     <v-row justify="center" align="center">
       <v-avatar color="indigo">
         <v-icon dark>mdi-account-circle</v-icon>
@@ -125,7 +151,7 @@
     </v-row>
   </v-container>
 </template>
-
+<script src="https://cdn.jsdelivr.net/npm/jdenticon@2.2.0" async></script>
 <script>
   import VideoPlayer from '@/components/VideoPlayer.vue'
   import awsvideoconfig from '~/src/aws-video-exports'
@@ -134,6 +160,15 @@
     components: {
       VideoPlayer
     },
+    /*     created() {
+  this.$loadScript("https://cdn.jsdelivr.net/npm/jdenticon@2.2.0")
+    .then(() => {
+      this.initiateMapQuest()
+    })
+    .catch(() => {
+      // Failed to fetch script
+    })
+}, */
     async fetch() {
       console.log('el id')
       let url = '/video'
@@ -148,6 +183,8 @@
           this.comments = res.comments
           this.videoId = res.url_stream
           this.ratingVideo = res.rating
+          this.views = res.views
+          this.title = res.titulo
           this.items = [
             {
               text: res.grado
@@ -173,10 +210,15 @@
             awsId.pop()
             awsId = awsId.join('.')
             console.log(awsId)
-            /* this.videoOptions.sources.src = 'https://' + awsvideoconfig.awsOutputVideo +
-                '/1594190757035-2020-04-17_15-03-58/1594190757035-2020-04-17_15-03-58.m3u8' */
+            /* this.videoOptions.sources.src =
+              'https://' +
+              awsvideoconfig.awsOutputVideo +
+              '/1594190757035-2020-04-17_15-03-58/1594190757035-2020-04-17_15-03-58.m3u8' */
+            /* this.videoOptions.sources[0].src =
+              'https://educhayvod-dev-output-gf3i00yl.s3.amazonaws.com/1594190757035-2020-04-17_15-03-58/1594190757035-2020-04-17_15-03-58.m3u8' */
+
             // https://educhayvod-dev-output-gf3i00yl.s3.amazonaws.com/1594277636565-2020-04-17_15-04-51/1594277636565-2020-04-17_15-04-51.m3u8
-            this.videoOptions.sources.src =
+            this.videoOptions.sources[0].src =
               'https://' +
               awsvideoconfig.awsOutputVideo +
               '/' +
@@ -199,7 +241,7 @@
           console.log(response[this.items[0].text][this.items[1].text])
           this.unidades = response[this.items[0].text][
             this.items[1].text
-          ].splice(0, 6)
+          ].splice(0, 17)
           // console.log(this.unidades)
         })
         .catch((e) => {
@@ -210,6 +252,8 @@
       return {
         id: this.$route.params.id,
         videoId: '',
+        title: '',
+        views: 0,
         ratingVideo: 0,
         ratingUser: 0,
         dialog: false,
@@ -223,12 +267,11 @@
         videoOptions: {
           autoplay: false,
           controls: true,
+          width: 1270,
+          height: 830,
           sources: [
             {
               src: '',
-              //   'https://' +
-              //   awsvideoconfig.awsOutputVideo +
-              //   '/1594190757035-2020-04-17_15-03-58/1594190757035-2020-04-17_15-03-58.m3u8',
               type: 'application/x-mpegURL'
             }
           ]
@@ -237,7 +280,7 @@
     },
     watch: {
       sixUnits() {
-        return this.unidades.splice(0, 6)
+        return this.unidades.splice(0, 17)
       }
     },
     methods: {

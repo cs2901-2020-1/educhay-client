@@ -57,7 +57,7 @@
           v-for="(video, index) in videos"
           :key="video.id"
           class="mx-auto my-6"
-          max-width="374"
+          width="374"
           :to="'/video/' + video.id"
         >
           <v-img
