@@ -50,7 +50,7 @@
     <v-row justify="center">
       <v-rating
         v-model="ratingVideo"
-        :half-increments="true"
+        half-increments
         :readonly="true"
       ></v-rating>
       <v-btn color="primary" dark @click.stop="dialog = true">
@@ -250,6 +250,7 @@
             usuario_email: this.$auth.user.email
           })
           .then((res) => {
+            console.log(res)
             this.ratingVideo = res
           })
           .catch((e) => {
