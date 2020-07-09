@@ -350,7 +350,8 @@
             _unidad: this.form.unidad,
             url_stream: this.urlUpload,
             titulo: this.form.title,
-            url_download: ''
+            url_download: '',
+            descripcion: 'descripcion'
           })
           .then((res) => {
             console.log('correcto')
@@ -370,7 +371,8 @@
             'https://www.youtube.com/embed/' +
             this.form.link.substr(this.form.link.length - 11),
           titulo: this.form.title,
-          url_download: ''
+          url_download: '',
+          descripcion: 'descripcion'
         }
         console.log(json)
         await this.$axios
@@ -379,7 +381,7 @@
             console.log('correcto')
           })
           .catch((e) => {
-            console.log('error')
+            console.log(e)
           })
       },
       async checkId() {

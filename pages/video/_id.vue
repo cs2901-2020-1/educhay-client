@@ -135,12 +135,16 @@
       VideoPlayer
     },
     async fetch() {
-      let url = '/video/' + this.id
+      console.log('el id')
+      let url = '/video'
       await this.$axios
-        .$get(url)
+        .$post(url, {
+          id: this.id,
+          user_email: this.$auth.user.email
+        })
         .then((res) => {
+          console.log('el res de unit_videos', res)
           this.isYoutube = !res.url_stream.includes('amazon')
-          console.log(res)
           this.comments = res.comments
           this.videoId = res.url_stream
           this.ratingVideo = res.rating
@@ -160,6 +164,28 @@
           ]
           this.creador = res.creador_email
           this.creador_nombre = res.creador_nombre + ' ' + res.creador_apellido
+          if (!this.isYoutube) {
+            let awsId = this.videoId
+              .split('/')
+              .slice(2)
+              .join()
+            awsId = awsId.split('.')
+            awsId.pop()
+            awsId = awsId.join('.')
+            console.log(awsId)
+            /* this.videoOptions.sources.src = 'https://' + awsvideoconfig.awsOutputVideo +
+                '/1594190757035-2020-04-17_15-03-58/1594190757035-2020-04-17_15-03-58.m3u8' */
+            // https://educhayvod-dev-output-gf3i00yl.s3.amazonaws.com/1594277636565-2020-04-17_15-04-51/1594277636565-2020-04-17_15-04-51.m3u8
+            this.videoOptions.sources.src =
+              'https://' +
+              awsvideoconfig.awsOutputVideo +
+              '/' +
+              awsId +
+              '/' +
+              awsId +
+              '.m3u8'
+            console.log(this.videoOptions.sources.src)
+          }
         })
         .catch((e) => {
           console.error(e)
@@ -169,6 +195,7 @@
       await this.$axios
         .$get(url)
         .then((response) => {
+          console.log('el response', response)
           console.log(response[this.items[0].text][this.items[1].text])
           this.unidades = response[this.items[0].text][
             this.items[1].text
@@ -198,10 +225,10 @@
           controls: true,
           sources: [
             {
-              src:
-                'https://' +
-                awsvideoconfig.awsOutputVideo +
-                '/1594190757035-2020-04-17_15-03-58/1594190757035-2020-04-17_15-03-58.m3u8',
+              src: '',
+              //   'https://' +
+              //   awsvideoconfig.awsOutputVideo +
+              //   '/1594190757035-2020-04-17_15-03-58/1594190757035-2020-04-17_15-03-58.m3u8',
               type: 'application/x-mpegURL'
             }
           ]

@@ -18,7 +18,17 @@
 
 <script>
   export default {
-    auth: false
+    async fetch() {
+      const url = '/videos/historicos/' + this.$auth.user.email
+      await this.$axios
+        .$get(url)
+        .then((res) => {
+          console.log(res)
+        })
+        .catch((e) => {
+          console.log(e)
+        })
+    }
   }
 </script>
 

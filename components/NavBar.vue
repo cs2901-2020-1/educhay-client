@@ -55,9 +55,20 @@
               <v-icon left dark>{{ item.icon }}</v-icon>
               {{ item.title }}
             </v-btn>
-            <v-btn text @click="logOut">
+            <v-btn text>
               <v-icon left dark>mdi-account-settings</v-icon>
               {{ this.$auth.user.nombre + ' ' + this.$auth.user.apellido }}
+            </v-btn>
+            <v-btn text to="/notifications">
+              <v-badge
+                :content="notifications"
+                :value="notifications"
+                color="green"
+                overlap
+                dot
+              >
+                <v-icon small>mdi-bell</v-icon>
+              </v-badge>
             </v-btn>
             <v-btn text @click="logOut">
               <v-icon left dark>mdi-logout</v-icon>
@@ -76,9 +87,20 @@
               <v-icon left dark>{{ item.icon }}</v-icon>
               {{ item.title }}
             </v-btn>
-            <v-btn text @click="logOut">
+            <v-btn text>
               <v-icon left dark>mdi-account-settings</v-icon>
               {{ this.$auth.user.nombre + ' ' + this.$auth.user.apellido }}
+            </v-btn>
+            <v-btn text to="/notifications">
+              <v-badge
+                :content="notifications"
+                :value="notifications"
+                color="green"
+                overlap
+                dot
+              >
+                <v-icon small>mdi-bell</v-icon>
+              </v-badge>
             </v-btn>
             <v-btn text @click="logOut">
               <v-icon left dark>mdi-logout</v-icon>
@@ -101,6 +123,38 @@
               <v-icon left dark>mdi-account-settings</v-icon>
               {{ this.$auth.user.nombre + ' ' + this.$auth.user.apellido }}
             </v-btn>
+            <v-btn text to="/notifications">
+              <v-badge
+                :content="notifications"
+                :value="notifications"
+                color="green"
+                overlap
+                dot
+              >
+                <v-icon small>mdi-bell</v-icon>
+              </v-badge>
+            </v-btn>
+            <!--            <v-menu bottom left offset-y>-->
+            <!--              <template v-slot:activator="{ on, attrs }">-->
+            <!--                <v-btn text v-bind="attrs" v-on="on">-->
+            <!--                  <v-badge-->
+            <!--                    :content="notifications"-->
+            <!--                    :value="notifications"-->
+            <!--                    color="green"-->
+            <!--                    overlap-->
+            <!--                    dot="true"-->
+            <!--                  >-->
+            <!--                    <v-icon small>mdi-bell</v-icon>-->
+            <!--                  </v-badge>-->
+            <!--                </v-btn>-->
+            <!--              </template>-->
+
+            <!--              <v-list>-->
+            <!--                <v-list-item v-for="(item, index) in items" :key="index">-->
+            <!--                  <v-list-item-title>{{ item.title }}</v-list-item-title>-->
+            <!--                </v-list-item>-->
+            <!--              </v-list>-->
+            <!--            </v-menu>-->
             <v-btn text @click="logOut">
               <v-icon left dark>mdi-logout</v-icon>
               Cerrar sesión
@@ -136,6 +190,13 @@
   export default {
     data() {
       return {
+        items: [
+          { title: 'Click Me' },
+          { title: 'Click Me' },
+          { title: 'Click Me' },
+          { title: 'Click Me 2' }
+        ],
+        notifications: 2,
         appTitle: 'Educhay',
         sidebar: false,
         menuItemsLoggedin: [
