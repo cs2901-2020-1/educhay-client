@@ -115,6 +115,9 @@
                   {{ comentario.content }}
                 </v-row>
               </v-col>
+              <v-col v-if="comentario.email === $auth.user.email">
+                <v-icon @click="deleteComment(comment.id)">mdi-minus</v-icon>
+              </v-col>
             </v-row>
           </v-container>
         </v-card-text>
@@ -132,8 +135,6 @@
       VideoPlayer
     },
     async fetch() {
-      console.log(this.$auth.user.email)
-      console.log(Date.now())
       let url = '/video/' + this.id
       await this.$axios
         .$get(url)
@@ -254,6 +255,21 @@
           .catch((e) => {
             console.log(e)
           })
+      },
+      async deleteComment(commentId) {
+        const url = '/comments/delete'
+        await this.$axios
+          .$put(url, {
+            creador_email: this.$auth.user.email,
+            video_id: this.id,
+            comment_id: commentId
+          })
+          .then((res) => {
+            console.log(res)
+          })
+          .catch((e) => {
+            console.log(e)
+          })
       }
     }
   }
@@ -262,43 +278,3 @@
 <style>
   @import 'node_modules/video.js/dist/video-js.css';
 </style>
-<!--
-<template>
-  <div>
-    <video-player :options="videoOptions" />
-  </div>
-</template>
-
-<script>
-  import VideoPlayer from '@/components/VideoPlayer.vue'
-  import awsvideoconfig from '~/src/aws-video-exports'
-
-  export default {
-    name: 'VideoExample',
-    auth: false,
-    components: {
-      VideoPlayer
-    },
-    data() {
-      return {
-        videoOptions: {
-          autoplay: false,
-          controls: true,
-          sources: [
-            {
-              src:
-                'https://' +
-                awsvideoconfig.awsOutputVideo +
-                '/color_pencils_small_frames/color_pencils_small_frames.m3u8',
-              type: 'application/x-mpegURL'
-            }
-          ]
-        }
-      }
-    }
-  }
-</script>
-<style>
-  @import 'node_modules/video.js/dist/video-js.css';
-</style>
--->
