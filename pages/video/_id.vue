@@ -11,7 +11,7 @@
     </v-row>
     <v-row>
       <v-col xs="12" sm="12" md="7" align="center" justify="center">
-        <div>
+        <template v-if="isYoutube">
           <iframe
             width="560"
             height="315"
@@ -19,8 +19,11 @@
             frameborder="0"
             allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
             allowfullscreen
-          ></iframe>
-        </div>
+          />
+        </template>
+        <template v-else>
+          <video-player :options="videoOptions" />
+        </template>
       </v-col>
       <v-col>
         <v-list shaped dense>
@@ -56,7 +59,7 @@
 
       <v-dialog v-model="dialog" max-width="290">
         <v-card>
-          <v-card-title class="headline">Ratear</v-card-title>
+          <v-card-title class="headline">Calificar</v-card-title>
 
           <v-card-text>
             <v-rating v-model="ratingUser"></v-rating>
@@ -80,12 +83,18 @@
       <v-avatar color="indigo">
         <v-icon dark>mdi-account-circle</v-icon>
       </v-avatar>
-      <v-text-field class="m-3" label="Solo" solo :hide-details="true" />
-      <v-btn>
+      <v-text-field
+        v-model="comment"
+        class="m-3"
+        label="Solo"
+        solo
+        :hide-details="true"
+      />
+      <v-btn @click="submitComment">
         Enviar
       </v-btn>
     </v-row>
-    <v-row>
+    <v-row v-for="comentario in comments" :key="comentario.key">
       <v-card :shaped="true">
         <v-card-text>
           <v-container>
@@ -97,11 +106,17 @@
               </v-col>
               <v-col>
                 <v-row>
-                  <v-card-title>usuario</v-card-title>
+                  <v-card-title
+                    >{{ comentario.nombre }}
+                    {{ comentario.apellido }}</v-card-title
+                  >
                 </v-row>
                 <v-row>
-                  Lorem ipsumsdfjasfdks jfsj lksafjls adjflasjl
+                  {{ comentario.content }}
                 </v-row>
+              </v-col>
+              <v-col v-if="comentario.email === $auth.user.email">
+                <v-icon @click="deleteComment(comment.id)">mdi-minus</v-icon>
               </v-col>
             </v-row>
           </v-container>
@@ -112,13 +127,21 @@
 </template>
 
 <script>
+  import VideoPlayer from '@/components/VideoPlayer.vue'
+  import awsvideoconfig from '~/src/aws-video-exports'
+
   export default {
+    components: {
+      VideoPlayer
+    },
     async fetch() {
       let url = '/video/' + this.id
       await this.$axios
         .$get(url)
         .then((res) => {
+          this.isYoutube = !res.url_stream.includes('amazon')
           console.log(res)
+          this.comments = res.comments
           this.videoId = res.url_stream
           this.ratingVideo = res.rating
           this.items = [
@@ -167,7 +190,22 @@
         comments: [],
         creador: '',
         creador_nombre: '',
-        unidades: {}
+        unidades: {},
+        comment: '',
+        isYoutube: true,
+        videoOptions: {
+          autoplay: false,
+          controls: true,
+          sources: [
+            {
+              src:
+                'https://' +
+                awsvideoconfig.awsOutputVideo +
+                '/1594190757035-2020-04-17_15-03-58/1594190757035-2020-04-17_15-03-58.m3u8',
+              type: 'application/x-mpegURL'
+            }
+          ]
+        }
       }
     },
     watch: {
@@ -192,47 +230,52 @@
             console.log(e)
           })
         this.dialog = false
+      },
+      async submitComment() {
+        let url = '/comments/POST'
+        await this.$axios
+          .$post(url, {
+            creador_email: this.$auth.user.email,
+            fecha: Date.now(),
+            video_id: this.id,
+            content: this.comment
+          })
+          .then((res) => {
+            console.log(res)
+          })
+          .catch((e) => {
+            console.log(e)
+          })
+        url = '/video/' + this.id
+        await this.$axios
+          .get(url)
+          .then((res) => {
+            console.log(res)
+            this.comments = res.data.comments
+          })
+          .catch((e) => {
+            console.log(e)
+          })
+      },
+      async deleteComment(commentId) {
+        const url = '/comments/delete'
+        await this.$axios
+          .$put(url, {
+            creador_email: this.$auth.user.email,
+            video_id: this.id,
+            comment_id: commentId
+          })
+          .then((res) => {
+            console.log(res)
+          })
+          .catch((e) => {
+            console.log(e)
+          })
       }
     }
   }
 </script>
-<!--
-<template>
-  <div>
-    <video-player :options="videoOptions" />
-  </div>
-</template>
 
-<script>
-  import VideoPlayer from '@/components/VideoPlayer.vue'
-  import awsvideoconfig from '~/src/aws-video-exports'
-
-  export default {
-    name: 'VideoExample',
-    auth: false,
-    components: {
-      VideoPlayer
-    },
-    data() {
-      return {
-        videoOptions: {
-          autoplay: false,
-          controls: true,
-          sources: [
-            {
-              src:
-                'https://' +
-                awsvideoconfig.awsOutputVideo +
-                '/color_pencils_small_frames/color_pencils_small_frames.m3u8',
-              type: 'application/x-mpegURL'
-            }
-          ]
-        }
-      }
-    }
-  }
-</script>
 <style>
   @import 'node_modules/video.js/dist/video-js.css';
 </style>
--->
