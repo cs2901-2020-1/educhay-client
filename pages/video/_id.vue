@@ -160,6 +160,23 @@
           ]
           this.creador = res.creador_email
           this.creador_nombre = res.creador_nombre + ' ' + res.creador_apellido
+          if (!this.isYoutube) {
+            let awsId = this.url_stream
+              .split('/')
+              .slice(2)
+              .join()
+            awsId = awsId.split('.').slice(-1)
+            /* this.videoOptions.sources.src = 'https://' + awsvideoconfig.awsOutputVideo +
+                '/1594190757035-2020-04-17_15-03-58/1594190757035-2020-04-17_15-03-58.m3u8' */
+            this.videoOptions.sources.src =
+              'https://' +
+              awsvideoconfig.awsOutputVideo +
+              '/' +
+              awsId +
+              '/' +
+              awsId +
+              '.m3u8'
+          }
         })
         .catch((e) => {
           console.error(e)
