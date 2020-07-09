@@ -1,7 +1,7 @@
 <template>
   <v-container fluid>
     <v-row justify="space-around" align="start">
-      <v-col md="3" align="start" justify="center">
+      <v-col md="3" align="start" justify="center" class="fixed">
         <div>
           <v-breadcrumbs :items="items" class="text-lg-h6 font-weight-black">
             <template v-slot:divider>
@@ -28,7 +28,7 @@
           </v-list-item-group>
         </v-list>
       </v-col>
-      <v-col xs="12" sm="12" md="8" align="center" justify="center">
+      <v-col xs="12" sm="12" md="8" offset="3" align="center" justify="center">
         <template v-if="isYoutube">
           <iframe
             width="1270"
@@ -100,54 +100,77 @@
                 </v-row>
               </v-col>
             </v-row>
+            <v-row>
+              <h2>Comentarios:</h2>
+            </v-row>
+            <v-row justify="center" align="center">
+              <v-avatar color="indigo">
+                <v-icon dark>mdi-account-circle</v-icon>
+              </v-avatar>
+              <v-text-field
+                v-model="comment"
+                class="m-3"
+                label="Ingresa un comentario..."
+                solo
+                :hide-details="true"
+              />
+              <v-btn @click="submitComment">
+                Enviar
+              </v-btn>
+            </v-row>
+            <v-row
+              v-for="comentario in comments"
+              :key="comentario.key"
+              class="m-2 h-5"
+            >
+              <v-card :shaped="true" class="w-100">
+                <v-card-text class="p-0">
+                  <v-container fluid class="p-0">
+                    <v-row justify="start" align="center">
+                      <v-col md="1">
+                        <v-avatar color="indigo">
+                          <v-icon dark>mdi-account-circle</v-icon>
+                        </v-avatar>
+                      </v-col>
+                      <v-col md="10" class="p-3">
+                        <v-row justify="space-between">
+                          <v-col>
+                            <v-card-title class="pt-1"
+                              >{{ comentario.nombre }}
+                              {{ comentario.apellido }}
+                              <v-divider vertical class="pl-1 pr-1">
+                              </v-divider>
+                              <div class="text-md-body-1">
+                                {{ comentario.email }}
+                              </div>
+                            </v-card-title>
+                          </v-col>
+                          <v-col md="2">
+                            {{ comentario.fecha }}
+                          </v-col>
+                        </v-row>
+                        <v-row class="text-md-body-1 pl-5 pr-3 pb-3">
+                          {{ comentario.content }}
+                        </v-row>
+                      </v-col>
+                      <v-col
+                        md="1"
+                        align-self="start"
+                        justify-self="end"
+                        v-if="comentario.email === $auth.user.email"
+                      >
+                        <v-icon @click="deleteComment(comment.id)"
+                          >mdi-minus</v-icon
+                        >
+                      </v-col>
+                    </v-row>
+                  </v-container>
+                </v-card-text>
+              </v-card>
+            </v-row>
           </v-col>
         </v-row>
       </v-col>
-    </v-row>
-
-    <v-row justify="center" align="center">
-      <v-avatar color="indigo">
-        <v-icon dark>mdi-account-circle</v-icon>
-      </v-avatar>
-      <v-text-field
-        v-model="comment"
-        class="m-3"
-        label="Solo"
-        solo
-        :hide-details="true"
-      />
-      <v-btn @click="submitComment">
-        Enviar
-      </v-btn>
-    </v-row>
-    <v-row v-for="comentario in comments" :key="comentario.key">
-      <v-card :shaped="true">
-        <v-card-text>
-          <v-container>
-            <v-row>
-              <v-col>
-                <v-avatar color="indigo">
-                  <v-icon dark>mdi-account-circle</v-icon>
-                </v-avatar>
-              </v-col>
-              <v-col>
-                <v-row>
-                  <v-card-title
-                    >{{ comentario.nombre }}
-                    {{ comentario.apellido }}</v-card-title
-                  >
-                </v-row>
-                <v-row>
-                  {{ comentario.content }}
-                </v-row>
-              </v-col>
-              <v-col v-if="comentario.email === $auth.user.email">
-                <v-icon @click="deleteComment(comment.id)">mdi-minus</v-icon>
-              </v-col>
-            </v-row>
-          </v-container>
-        </v-card-text>
-      </v-card>
     </v-row>
   </v-container>
 </template>
@@ -171,9 +194,9 @@
 }, */
     async fetch() {
       console.log('el id')
-      let url = '/video'
+      let url = '/video/update'
       await this.$axios
-        .$post(url, {
+        .$put(url, {
           id: this.id,
           user_email: this.$auth.user.email
         })
@@ -316,9 +339,12 @@
           .catch((e) => {
             console.log(e)
           })
-        url = '/video/' + this.id
+        url = '/video'
         await this.$axios
-          .get(url)
+          .post(url, {
+            id: this.id,
+            user_email: this.$auth.user.email
+          })
           .then((res) => {
             console.log(res)
             this.comments = res.data.comments
@@ -348,4 +374,10 @@
 
 <style>
   @import 'node_modules/video.js/dist/video-js.css';
+
+  .fixed {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+  }
 </style>
