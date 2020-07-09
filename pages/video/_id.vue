@@ -367,6 +367,19 @@
           .catch((e) => {
             console.log(e)
           })
+        url = '/video'
+        await this.$axios
+          .post(url, {
+            id: this.id,
+            user_email: this.$auth.user.email
+          })
+          .then((res) => {
+            console.log(res)
+            this.comments = res.data.comments
+          })
+          .catch((e) => {
+            console.log(e)
+          })
       }
     }
   }
