@@ -7,7 +7,7 @@
     <button @click="execute()">execute</button> -->
       <v-col xs="12" sm="12" md="6" class="localVid">
         <v-row justify="center" align="center" class="min-vh-100">
-          <v-dialog v-model="showUpload" persistent max-width="600px">
+          <v-dialog v-model="showUpload" persistent class="modal">
             <template v-slot:activator="{ on, attrs }">
               <v-btn
                 color="rgb(25, 84, 140)"
@@ -118,6 +118,23 @@
                             >Subir</v-btn
                           >
                         </v-card-actions>
+                        <v-progress-linear
+                          v-show="progress"
+                          indeterminate
+                          color="cyan"
+                          class="mt-3"
+                        ></v-progress-linear>
+                      </v-row>
+                      <v-row v-if="message">
+                        <v-alert v-if="message === 'correcto'" type="success">
+                          Success
+                        </v-alert>
+                        <v-alert
+                          v-else-if="message === 'incorrecto'"
+                          type="error"
+                        >
+                          Error
+                        </v-alert>
                       </v-row>
                     </v-col>
                   </v-row>
@@ -129,7 +146,7 @@
       </v-col>
       <v-col xs="12" sm="12" md="6" class="youtubeVid">
         <v-row justify="center" align="center" class="min-vh-100">
-          <v-dialog v-model="showModal" persistent max-width="600px">
+          <v-dialog v-model="showModal" persistent class="modal">
             <template v-slot:activator="{ on, attrs }">
               <v-btn color="error" dark v-bind="attrs" v-on="on">
                 youtube
@@ -216,10 +233,13 @@
                   <v-row justify="center" align="center">
                     <v-col md="4">
                       <v-row v-if="message">
-                        <v-alert v-if="message === 'success'" type="success">
+                        <v-alert v-if="message === 'correcto'" type="success">
                           Success
                         </v-alert>
-                        <v-alert v-else-if="message === 'error'" type="error">
+                        <v-alert
+                          v-else-if="message === 'incorrecto'"
+                          type="error"
+                        >
                           Error
                         </v-alert>
                       </v-row>
@@ -229,6 +249,12 @@
                             >Subir</v-btn
                           >
                         </v-card-actions>
+                        <v-progress-linear
+                          v-show="progress"
+                          indeterminate
+                          color="cyan"
+                          class="mt-3"
+                        ></v-progress-linear>
                       </v-row>
                     </v-col>
                   </v-row>
@@ -256,6 +282,7 @@
           max: 5,
           range: [0, 5]
         },
+        progress: false,
         showModal: false,
         showUpload: false,
         form: {
@@ -302,6 +329,7 @@
       submitFile() {
         const formData = new FormData()
         formData.append('file', this.file)
+        this.progress = true
         this.$axios
           .post('/uploadFile', formData, {
             headers: {
@@ -355,13 +383,17 @@
           })
           .then((res) => {
             console.log('correcto')
+            this.progress = false
+            this.message = 'correcto'
           })
           .catch((e) => {
             console.log('error')
+            this.message = 'incorrecto'
           })
       },
       async uploadVideo() {
         const url = '/videos/POST'
+        this.progress = true
         const json = {
           creador_email: 'profe@utec.edu.pe',
           _curso: this.form.curso,
@@ -378,10 +410,13 @@
         await this.$axios
           .$post(url, json)
           .then((res) => {
+            this.message = 'correcto'
             console.log('correcto')
+            this.progress = false
           })
           .catch((e) => {
             console.log(e)
+            this.message = 'incorrecto'
           })
       },
       async checkId() {
@@ -476,5 +511,9 @@
 
   .youtubeVid {
     background-color: rgb(243, 188, 188);
+  }
+  .modal {
+    height: 60vh;
+    width: 60vw;
   }
 </style>
