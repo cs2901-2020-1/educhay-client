@@ -370,6 +370,7 @@
       },
       async uploadLocalVideo() {
         const url = '/videos/POST'
+        console.log(this.$auth.user)
         await this.$axios
           .$post(url, {
             creador_email: 'profe@utec.edu.pe',
@@ -378,7 +379,7 @@
             _unidad: this.form.unidad,
             url_stream: this.urlUpload,
             titulo: this.form.title,
-            url_download: '',
+            url_download: this.urlUpload,
             descripcion: 'descripcion'
           })
           .then((res) => {

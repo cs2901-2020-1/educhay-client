@@ -20,8 +20,8 @@
               </v-list-item-icon>
               <v-list-item-content>
                 <v-list-item-title
-                  v-text="item.nombre"
                   class="text-sm-body-2 font-weight-black"
+                  v-text="item.nombre"
                 ></v-list-item-title>
               </v-list-item-content>
             </v-list-item>
@@ -44,9 +44,15 @@
         </template>
         <v-row justify="center" class="p-3">
           <v-col>
-            <div class="text-lg-h4 font-weight-black">
-              {{ title }}
-            </div>
+            <v-row>
+              <div class="text-lg-h4 font-weight-black">
+                {{ title }}
+              </div>
+              <div v-if="!isYoutube">
+                <a :href="urlUpload"></a>
+              </div>
+            </v-row>
+
             <v-row justify="center" align="center">
               <v-col>
                 <div>
@@ -154,10 +160,10 @@
                         </v-row>
                       </v-col>
                       <v-col
+                        v-if="comentario.email === $auth.user.email"
                         md="1"
                         align-self="start"
                         justify-self="end"
-                        v-if="comentario.email === $auth.user.email"
                       >
                         <v-icon @click="deleteComment(comment.id)"
                           >mdi-minus</v-icon
@@ -205,6 +211,7 @@
           this.isYoutube = !res.url_stream.includes('amazon')
           this.comments = res.comments
           this.videoId = res.url_stream
+          this.urlUpload = res.url_download
           this.ratingVideo = res.rating
           this.views = res.views
           this.title = res.titulo
@@ -377,7 +384,7 @@
 
   .fixed {
     position: fixed;
-    bottom: 0;
+    top: 0;
     left: 0;
   }
 </style>
