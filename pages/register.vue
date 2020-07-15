@@ -5,6 +5,22 @@
         <div class="text-center my-style justify-content-center">
           <h1 class="m-5">Registro</h1>
           <v-form>
+            <v-row class="mb-5">
+              <v-col>
+                <v-btn
+                  :color="isProfe ? 'gray' : 'cyan'"
+                  @click="isProfe = false"
+                  >Alumno</v-btn
+                >
+              </v-col>
+              <v-col>
+                <v-btn
+                  :color="isProfe ? 'cyan' : 'gray'"
+                  @click="isProfe = true"
+                  >Profesor</v-btn
+                >
+              </v-col>
+            </v-row>
             <v-text-field
               v-model="form.nombre"
               type="text"
@@ -23,19 +39,6 @@
               label="Correo electronico"
               outlined
             />
-            <!-- <v-text-field
-            v-model="form.schoolName"
-            type="text"
-            label="Colegio"
-            outlined
-          />
-            <v-text-field
-              v-model="form.username"
-              type="text"
-              label="Nombre de usuario"
-              outlined
-            />
-            -->
             <v-text-field
               v-model="form.password"
               type="password"
@@ -76,11 +79,10 @@
         form: {
           nombre: '',
           apellido: '',
-          // schoolName: '',
           email: '',
-          // username: '',
           password: ''
-        }
+        },
+        isProfe: false
       }
     },
     computed: {
@@ -101,7 +103,7 @@
     },
     methods: {
       async onSubmit() {
-        const url = '/register'
+        const url = this.isProfe ? '/register/profe' : '/register'
         // this.$v.$touch()
         await this.$axios
           .$post(url, this.form)
@@ -111,6 +113,7 @@
           .catch((e) => {
             console.log(e)
           })
+        /*
         this.$auth
           .loginWith('local', { data: this.form })
           .then((res) => {
@@ -121,6 +124,8 @@
           .catch((e) => {
             console.log(e)
           })
+          */
+        this.$router.push('/login')
         // this.$auth.setUserToken().then(() => {})
       }
     }
