@@ -5,26 +5,33 @@
       authorize and load
     </button>
     <button @click="execute()">execute</button> -->
-      <v-col xs="12" sm="12" md="6" class="localVid">
-        <v-row justify="center" align="center" class="min-vh-100">
+      <v-col xs="12" sm="12" md="6">
+        <v-row justify="center" align="center">
+          <h1>
+            Subir archivo de video
+          </h1>
+        </v-row>
+        <v-row justify="center" align="center">
           <v-dialog v-model="showUpload" persistent class="modal">
             <template v-slot:activator="{ on, attrs }">
-              <v-btn
-                color="rgb(25, 84, 140)"
-                large
-                fab
-                dark
-                v-bind="attrs"
-                v-on="on"
-              >
-                <v-icon>mdi-television</v-icon>
-              </v-btn>
+              <div class="localVid">
+                <v-btn
+                  color="rgb(25, 84, 140)"
+                  large
+                  fab
+                  dark
+                  v-bind="attrs"
+                  v-on="on"
+                >
+                  <v-icon>mdi-television</v-icon>
+                </v-btn>
+              </div>
             </template>
             <v-card>
               <v-card-title>
                 <span class="headline">Subir video local</span>
                 <v-spacer />
-                <v-icon @click="showUpload = false">mdi-window-close</v-icon>
+                <v-icon @click="borrarModal">mdi-window-close</v-icon>
               </v-card-title>
               <v-card-text>
                 <v-container>
@@ -93,19 +100,15 @@
                       </v-file-input>
                       <v-card-text>
                         <v-row justify="center" align="center">
-                          <v-col md="6">
-                            <v-subheader class="pl-0">Rating</v-subheader>
-                            <v-rating
-                              v-model="form.rating"
-                              justify="center"
-                              align="center"
-                              color="yellow darken-3"
-                              background-color="grey darken-1"
-                              empty-icon="$ratingFull"
-                              half-increments
-                              hover
-                            ></v-rating>
-                          </v-col>
+                          <v-textarea
+                            v-model="form.description"
+                            label="Descripcion"
+                            counter
+                            maxlength="200"
+                            full-width
+                            single-line
+                          >
+                          </v-textarea>
                         </v-row>
                       </v-card-text>
                     </v-col>
@@ -125,7 +128,7 @@
                           class="mt-3"
                         ></v-progress-linear>
                       </v-row>
-                      <v-row v-if="message">
+                      <v-row v-if="message" align="center" justify="center">
                         <v-alert v-if="message === 'correcto'" type="success">
                           Success
                         </v-alert>
@@ -144,19 +147,26 @@
           </v-dialog>
         </v-row>
       </v-col>
-      <v-col xs="12" sm="12" md="6" class="youtubeVid">
-        <v-row justify="center" align="center" class="min-vh-100">
+      <v-col xs="12" sm="12" md="6">
+        <v-row justify="center" align="center">
+          <h1>
+            Subir video de Youtube
+          </h1>
+        </v-row>
+        <v-row justify="center" align="center">
           <v-dialog v-model="showModal" persistent class="modal">
             <template v-slot:activator="{ on, attrs }">
-              <v-btn color="error" dark v-bind="attrs" v-on="on">
-                youtube
-              </v-btn>
+              <div class="youtubeVid">
+                <v-btn color="error" dark v-bind="attrs" v-on="on">
+                  youtube
+                </v-btn>
+              </div>
             </template>
             <v-card>
               <v-card-title>
                 <span class="headline">Subir video de YouTube</span>
                 <v-spacer />
-                <v-icon @click="showModal = false">mdi-window-close</v-icon>
+                <v-icon @click="borrarModal">mdi-window-close</v-icon>
               </v-card-title>
               <v-card-text>
                 <v-container class="pr-6 pl-6">
@@ -210,29 +220,34 @@
                         ></v-select>
                       </v-row>
                       <v-row>
-                        <v-card-text>
-                          <v-row justify="center" align="center">
-                            <v-col md="6">
-                              <v-subheader class="pl-0">Rating</v-subheader>
-                              <v-rating
-                                v-model="form.rating"
-                                justify="center"
-                                align="center"
-                                color="yellow darken-3"
-                                background-color="grey darken-1"
-                                empty-icon="$ratingFull"
-                                half-increments
-                                hover
-                              ></v-rating>
-                            </v-col>
-                          </v-row>
-                        </v-card-text>
+                        <v-textarea
+                          v-model="form.description"
+                          label="Descripcion"
+                          counter
+                          maxlength="200"
+                          full-width
+                          single-line
+                        >
+                        </v-textarea>
                       </v-row>
                     </v-col>
                   </v-row>
                   <v-row justify="center" align="center">
+                    <v-card-actions>
+                      <v-btn color="primary" @click="uploadVideo">
+                        Subir
+                      </v-btn>
+                    </v-card-actions>
+                    <v-progress-linear
+                      v-show="progress"
+                      indeterminate
+                      color="cyan"
+                      class="mt-3"
+                    ></v-progress-linear>
+                  </v-row>
+                  <v-row justify="center" align="center">
                     <v-col md="4">
-                      <v-row v-if="message">
+                      <v-row v-if="message" justify="center" align="center">
                         <v-alert v-if="message === 'correcto'" type="success">
                           Success
                         </v-alert>
@@ -242,19 +257,6 @@
                         >
                           Error
                         </v-alert>
-                      </v-row>
-                      <v-row justify="center" align="center">
-                        <v-card-actions>
-                          <v-btn color="primary" @click="uploadVideo"
-                            >Subir</v-btn
-                          >
-                        </v-card-actions>
-                        <v-progress-linear
-                          v-show="progress"
-                          indeterminate
-                          color="cyan"
-                          class="mt-3"
-                        ></v-progress-linear>
                       </v-row>
                     </v-col>
                   </v-row>
@@ -291,7 +293,7 @@
           curso: '',
           link: '',
           title: '',
-          rating: 5
+          description: ''
         },
         apiKey: 'AIzaSyAMZy4Hg0tcdVkisz6o_BVwJLFWyuM4V_I',
         message: null,
@@ -373,7 +375,7 @@
         console.log(this.$auth.user)
         await this.$axios
           .$post(url, {
-            creador_email: 'profe@utec.edu.pe',
+            creador_email: this.$auth.user.email,
             _curso: this.form.curso,
             _grado: this.form.grado,
             _unidad: this.form.unidad,
@@ -389,6 +391,7 @@
           })
           .catch((e) => {
             console.log('error')
+            this.progress = false
             this.message = 'incorrecto'
           })
       },
@@ -396,7 +399,7 @@
         const url = '/videos/POST'
         this.progress = true
         const json = {
-          creador_email: 'profe@utec.edu.pe',
+          creador_email: this.$auth.user.email,
           _curso: this.form.curso,
           _grado: this.form.grado,
           _unidad: this.form.unidad,
@@ -417,8 +420,20 @@
           })
           .catch((e) => {
             console.log(e)
+            this.progress = false
             this.message = 'incorrecto'
           })
+      },
+      borrarModal() {
+        this.showModal = false
+        this.form.grado = ''
+        this.form.unidad = ''
+        this.form.curso = ''
+        this.form.link = ''
+        this.form.title = ''
+        this.showUpload = false
+        this.message = ''
+        this.progress = false
       },
       async checkId() {
         //  const apiKey = 'key=' + this.data.apiKey
@@ -508,13 +523,23 @@
 
   .localVid {
     background-color: rgb(167, 218, 241);
+    height: 30vh;
+    width: 30vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 
   .youtubeVid {
     background-color: rgb(243, 188, 188);
+    height: 30vh;
+    width: 30vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
   .modal {
-    height: 60vh;
-    width: 60vw;
+    height: 40vh;
+    width: 40vw;
   }
 </style>
