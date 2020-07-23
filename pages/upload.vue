@@ -409,7 +409,7 @@
             url_stream: this.urlUpload,
             titulo: this.form.title,
             url_download: this.urlUpload,
-            descripcion: this.descripcion
+            descripcion: this.description
           })
           .then((res) => {
             console.log('correcto')
