@@ -29,18 +29,18 @@
       </template>
     </v-navigation-drawer>
 
-    <v-app-bar color="#0bbfe0" class="educhay-navbar">
+    <v-app-bar color="#0bbfe0" class="educhay-navbar" fixed>
       <!-- <span class="hidden-sm-and-up"> -->
       <span class="hidden-sm-and-up">
         <v-app-bar-nav-icon @click="sidebar = !sidebar" />
       </span>
       <v-toolbar-title>
-        <!-- <nuxt-link to="/" tag="span" style="cursor: pointer;">
-          {{ appTitle }}
-        </nuxt-link>-->
-        <b-img src="~/assets/img/Logo 6.png" height="50" />
-        <small class="align-middle text-white">En colaboración con</small>
-        <b-img src="~/assets/img/utec 2.png" height="60" width="150" />
+        <nuxt-link to="/" tag="span" style="cursor: pointer;">
+          <!-- {{ appTitle }} -->
+          <b-img src="~/assets/img/Logo 6.png" height="50" />
+          <small class="align-middle text-white">En colaboración con</small>
+          <b-img src="~/assets/img/utec 2.png" height="50" width="120" />
+        </nuxt-link>
       </v-toolbar-title>
       <v-spacer />
       <template v-if="$auth.loggedIn">
@@ -151,23 +151,23 @@
         appTitle: 'Educhay',
         sidebar: false,
         menuItemsLoggedin: [
-          { title: 'Home', path: '/', icon: 'mdi-home' },
+          { title: 'Inicio', path: '/', icon: 'mdi-home' },
           { title: 'Videos', path: '/videos', icon: 'mdi-message-video' },
           { title: 'Historial', path: '/history', icon: 'mdi-history' }
         ],
         menuItems: [
-          { title: 'Home', path: '/', icon: 'mdi-home' },
+          { title: 'Inicio', path: '/', icon: 'mdi-home' },
           { title: 'Registrarse', path: '/register', icon: 'mdi-face' },
           { title: 'Iniciar sesion', path: '/login', icon: 'mdi-lock-open' }
         ],
         menuItemsProfesor: [
-          { title: 'Home', path: '/', icon: 'mdi-home' },
+          { title: 'Inicio', path: '/', icon: 'mdi-home' },
           { title: 'Subir', path: '/upload', icon: 'mdi-file-video' },
           { title: 'Videos', path: '/videos', icon: 'mdi-message-video' },
           { title: 'Historial', path: '/history', icon: 'mdi-history' }
         ],
         menuItemsAdmin: [
-          { title: 'Home', path: '/', icon: 'mdi-home' },
+          { title: 'Inicio', path: '/', icon: 'mdi-home' },
           { title: 'Subir', path: '/upload', icon: 'mdi-file-video' },
           { title: 'Videos', path: '/videos', icon: 'mdi-message-video' },
           { title: 'Historial', path: '/history', icon: 'mdi-history' }
@@ -177,6 +177,7 @@
     methods: {
       logOut() {
         this.$auth.logout()
+        this.$router.push('/')
       }
     }
   }

@@ -28,11 +28,19 @@
           </v-list-item-group>
         </v-list>
       </v-col>
-      <v-col xs="12" sm="12" md="8" offset="3" align="center" justify="center">
+      <v-col
+        xs="12"
+        sm="12"
+        md="9"
+        offset="3"
+        align="center"
+        justify="center"
+        class="p-3"
+      >
         <template v-if="isYoutube">
           <iframe
-            width="1270"
-            height="830"
+            width="100%"
+            height="800px"
             :src="videoId"
             frameborder="0"
             allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
@@ -42,77 +50,74 @@
         <template v-else>
           <video-player :options="videoOptions" />
         </template>
+        <b-row align-h="between" class="video-title p-3">
+          <div class="text-lg-h4 font-weight-black">
+            {{ title }}
+          </div>
+          <div>
+            <div v-if="!isYoutube">
+              <a :href="urlUpload"></a>
+            </div>
+            <v-btn color="#b0dee4" @click.stop="dialog = true">
+              Calificar
+            </v-btn>
+          </div>
+        </b-row>
+        <b-row align-h="between" align-v="start" class="video-author p-3">
+          <div class="p-3">
+            <b-row>
+              {{ creador_nombre }}
+              {{ creador }}
+            </b-row>
+            <br />
+            <b-row align-h="start">
+              <p>{{ descripcion }}</p>
+            </b-row>
+          </div>
+          <b-row align-v="center" align-h="end">
+            <v-rating
+              v-model="ratingVideo"
+              half-increments
+              background-color="orange lighten-3"
+              color="orange"
+              :readonly="true"
+            ></v-rating>
+            <div class="font-weight-black m-3 text-md-body-1">
+              ({{ views }}) vistas
+            </div>
+
+            <v-dialog v-model="dialog" max-width="290">
+              <v-card>
+                <v-card-title class="headline">Calificar</v-card-title>
+
+                <v-card-text>
+                  <v-rating v-model="ratingUser"></v-rating>
+                </v-card-text>
+
+                <v-card-actions>
+                  <v-spacer></v-spacer>
+
+                  <v-btn color="green darken-1" text @click="dialog = false">
+                    Cancelar
+                  </v-btn>
+
+                  <v-btn color="green darken-1" text @click="handleRating">
+                    Aceptar
+                  </v-btn>
+                </v-card-actions>
+              </v-card>
+            </v-dialog>
+          </b-row>
+        </b-row>
         <v-row justify="center" class="p-3">
           <v-col>
             <v-row>
-              <div class="text-lg-h4 font-weight-black">
-                {{ title }}
-              </div>
-              <div v-if="!isYoutube">
-                <a :href="urlUpload"></a>
-              </div>
-            </v-row>
-
-            <v-row justify="center" align="center">
-              <v-col>
-                <div>
-                  {{ creador_nombre }}
-                  {{ creador }}
-                </div>
-              </v-col>
-              <v-col>
-                <v-row justify="center" align="center">
-                  <v-rating
-                    v-model="ratingVideo"
-                    half-increments
-                    :readonly="true"
-                  ></v-rating>
-                  <div class="font-weight-black m-3 text-md-body-1">
-                    ({{ views }}) vistas
-                  </div>
-                  <v-btn color="primary" dark @click.stop="dialog = true">
-                    Calificar
-                  </v-btn>
-
-                  <v-dialog v-model="dialog" max-width="290">
-                    <v-card>
-                      <v-card-title class="headline">Calificar</v-card-title>
-
-                      <v-card-text>
-                        <v-rating v-model="ratingUser"></v-rating>
-                      </v-card-text>
-
-                      <v-card-actions>
-                        <v-spacer></v-spacer>
-
-                        <v-btn
-                          color="green darken-1"
-                          text
-                          @click="dialog = false"
-                        >
-                          Cancelar
-                        </v-btn>
-
-                        <v-btn
-                          color="green darken-1"
-                          text
-                          @click="handleRating"
-                        >
-                          Aceptar
-                        </v-btn>
-                      </v-card-actions>
-                    </v-card>
-                  </v-dialog>
-                </v-row>
-              </v-col>
-            </v-row>
-            <v-row>
-              <h2>Comentarios:</h2>
+              <h2 class="bebas t-green t-4">Comentarios:</h2>
             </v-row>
             <v-row justify="center" align="center">
-              <v-avatar color="indigo">
+              <!-- <v-avatar color="indigo">
                 <v-icon dark>mdi-account-circle</v-icon>
-              </v-avatar>
+              </v-avatar> -->
               <v-text-field
                 v-model="comment"
                 class="m-3"
@@ -120,28 +125,28 @@
                 solo
                 :hide-details="true"
               />
-              <v-btn @click="submitComment">
+              <b-btn variant="blue" @click="submitComment">
                 Enviar
-              </v-btn>
+              </b-btn>
             </v-row>
             <v-row
               v-for="comentario in comments"
               :key="comentario.key"
               class="m-2 h-5"
             >
-              <v-card :shaped="true" class="w-100">
+              <v-card :shaped="true" class="w-100" color="rgb(243, 244, 244)">
                 <v-card-text class="p-0">
                   <v-container fluid class="p-0">
                     <v-row justify="start" align="center">
                       <v-col md="1">
-                        <v-avatar color="indigo">
+                        <v-avatar color="indigo" class="ml-7">
                           <v-icon dark>mdi-account-circle</v-icon>
                         </v-avatar>
                       </v-col>
                       <v-col md="10" class="p-3">
-                        <v-row justify="space-between">
+                        <v-row justify="space-between" align="center">
                           <v-col>
-                            <v-card-title class="pt-1"
+                            <v-card-title class="p-0"
                               >{{ comentario.nombre }}
                               {{ comentario.apellido }}
                               <v-divider vertical class="pl-1 pr-1">
@@ -152,11 +157,17 @@
                             </v-card-title>
                           </v-col>
                           <v-col md="2">
-                            {{ comentario.fecha }}
+                            {{
+                              $moment(comentario.fecha).format(
+                                'DD/MM/YYYY hh:mm'
+                              )
+                            }}
                           </v-col>
                         </v-row>
-                        <v-row class="text-md-body-1 pl-5 pr-3 pb-3">
-                          {{ comentario.content }}
+                        <v-row class="text-md-body-1 p-2 pl-3">
+                          <div class="text-left">
+                            {{ comentario.content }}
+                          </div>
                         </v-row>
                       </v-col>
                       <v-col
@@ -165,8 +176,10 @@
                         align-self="start"
                         justify-self="end"
                       >
-                        <v-icon @click="deleteComment(comentario.comment_id)"
-                          >mdi-minus</v-icon
+                        <v-icon
+                          class="mt-5"
+                          @click="deleteComment(comentario.comment_id)"
+                          >mdi-close-circle</v-icon
                         >
                       </v-col>
                     </v-row>
@@ -215,6 +228,7 @@
           this.ratingVideo = res.rating
           this.views = res.views
           this.title = res.titulo
+          this.descripcion = res.descripcion
           this.items = [
             {
               text: res.grado
@@ -290,6 +304,7 @@
         items: [],
         comments: [],
         creador: '',
+        descripcion: '',
         creador_nombre: '',
         unidades: {},
         comment: '',

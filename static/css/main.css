@@ -130,7 +130,7 @@
 }
 .btn-blue {
   background-color: #0bbfe0;
-  color: #fff;
+  color: #fff !important;
   text-transform: uppercase;
   font-size: 1.2rem;
   border-radius: 10px;
@@ -139,7 +139,7 @@
 }
 
 .btn-blue:hover {
-  color: #fff;
+  color: #fff !important;
   border: 4px solid #b0dee4;
 }
 .btn-grey {
@@ -230,3 +230,20 @@ small {
   align-items: center;
   justify-content: center;
 } */
+
+.video-header {
+  background-color: #8dc740 !important;
+}
+
+.video-card {
+  background-color: rgb(209, 232, 178);
+}
+
+.video-title {
+  background-color: #0bbfe0;
+  color: #fff;
+}
+
+.video-author {
+  background-color: rgb(243, 244, 244) !important;
+}

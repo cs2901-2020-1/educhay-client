@@ -4,9 +4,9 @@
     <v-alert
       v-for="notification in filteredNotifications"
       :key="notification.key"
-      type="warning"
+      type="success"
     >
-      <nuxt-link :to="'/video/' + notification.video_id">
+      <nuxt-link :to="'/video/' + notification.video_id" class="text-white">
         El usuario con email: {{ notification.profesor_email }} ha subido el
         video: {{ notification.video_nombre }}
       </nuxt-link>

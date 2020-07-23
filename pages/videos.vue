@@ -77,7 +77,7 @@
             <v-row align="center" class="mx-0">
               <v-rating
                 :value="video.rating"
-                color="amber"
+                color="yellow"
                 dense
                 half-increments
                 readonly
@@ -88,9 +88,9 @@
                 {{ video.rating }}
               </div>
             </v-row>
-
+            <br />
             <div>
-              {{ video.titulo }}
+              {{ video.descripcion }}
             </div>
           </v-card-text>
         </v-card>
