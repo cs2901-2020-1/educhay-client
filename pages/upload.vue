@@ -6,7 +6,7 @@
       </b-col>
       <b-col md="4">
         <b-row>
-          <v-dialog v-model="showUpload" width="60vw" retain-focus="true">
+          <v-dialog v-model="showUpload" width="60vw" retain-focus>
             <template v-slot:activator="{ on, attrs }">
               <div>
                 <b-button
@@ -157,7 +157,7 @@
         <br />
         <br />
         <b-row>
-          <v-dialog v-model="showModal" width="60vw" retain-focus="true">
+          <v-dialog v-model="showModal" width="60vw" retain-focus>
             <template v-slot:activator="{ on, attrs }">
               <div>
                 <b-button
@@ -274,12 +274,14 @@
                             <v-alert
                               v-if="message === 'correcto'"
                               type="success"
+                              class="mb-0"
                             >
                               Success
                             </v-alert>
                             <v-alert
                               v-else-if="message === 'incorrecto'"
                               type="error"
+                              class="mb-0"
                             >
                               Error
                             </v-alert>
@@ -407,7 +409,7 @@
             url_stream: this.urlUpload,
             titulo: this.form.title,
             url_download: this.urlUpload,
-            descripcion: 'descripcion'
+            descripcion: this.descripcion
           })
           .then((res) => {
             console.log('correcto')
@@ -433,7 +435,7 @@
             this.form.link.substr(this.form.link.length - 11),
           titulo: this.form.title,
           url_download: '',
-          descripcion: 'descripcion'
+          descripcion: this.form.description
         }
         console.log(json)
         await this.$axios
@@ -456,6 +458,7 @@
         this.form.curso = ''
         this.form.link = ''
         this.form.title = ''
+        this.form.description = ''
         this.showUpload = false
         this.message = ''
         this.progress = false

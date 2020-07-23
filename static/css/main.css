@@ -230,3 +230,20 @@ small {
   align-items: center;
   justify-content: center;
 } */
+
+.video-header {
+  background-color: #8dc740 !important;
+}
+
+.video-card {
+  background-color: rgb(209, 232, 178);
+}
+
+.video-title {
+  background-color: #0bbfe0;
+  color: #fff;
+}
+
+.video-author {
+  background-color: rgb(243, 244, 244) !important;
+}
