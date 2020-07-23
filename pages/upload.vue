@@ -1,28 +1,4 @@
 <template>
-  <!-- <v-container class="maxHeight2 pt-0" fluid>
-    <v-row justify="center" align="center" class="min-vh-100">
-      <v-col xs="12" sm="12" md="6">
-        <v-row justify="center" align="center">
-          <h1>
-            Subir archivo de video
-          </h1>
-        </v-row>
-        <v-row justify="center" align="center">
-          
-        </v-row>
-      </v-col>
-      <v-col xs="12" sm="12" md="6">
-        <v-row justify="center" align="center">
-          <h1>
-            Subir video de Youtube
-          </h1>
-        </v-row>
-        <v-row justify="center" align="center">
-          
-        </v-row>
-      </v-col>
-    </v-row>
-  </v-container> -->
   <b-container>
     <b-row align-v="center">
       <b-col md="4">
@@ -333,11 +309,6 @@
     },
     data() {
       return {
-        slide: {
-          min: 0,
-          max: 5,
-          range: [0, 5]
-        },
         progress: false,
         showModal: false,
         showUpload: false,
