@@ -35,7 +35,7 @@
     computed: {
       filteredNotifications() {
         return this.notifications.filter(
-          (notification) => notification.read === true
+          (notification) => notification.read === false
         )
       }
     }
