@@ -3,6 +3,14 @@
     <v-col md="3" class="colorDarken">
       <v-row justify="center" align="center" class="maxHeight">
         <v-container>
+          <v-text-field
+            v-model="searchVideo"
+            solo
+            clearable
+            append-icon="mdi-magnify"
+            @click:append="handleSearch"
+            @click:clear="onSubmit"
+          ></v-text-field>
           <v-expansion-panels>
             <v-expansion-panel
               v-for="(grado_object, grado) in data"
@@ -101,7 +109,8 @@
     data() {
       return {
         data: null,
-        videos: null
+        videos: null,
+        searchVideo: ''
       }
     },
     computed: {
@@ -137,6 +146,29 @@
           .catch((e) => {
             console.log(e)
           })
+      },
+      handleSearch() {
+        console.log(this.searchVideo)
+        for (const obj1 in this.data) {
+          for (const obj2 in this.data[obj1]) {
+            for (
+              let item = this.data[obj1][obj2].length - 1;
+              item >= 0;
+              --item
+            ) {
+              if (
+                !this.data[obj1][obj2][item].nombre.includes(this.searchVideo)
+              ) {
+                console.log(
+                  this.data[obj1][obj2][item].nombre,
+                  'no incluye',
+                  this.searchVideo
+                )
+                this.data[obj1][obj2].splice(item, 1)
+              }
+            }
+          }
+        }
       }
     }
   }

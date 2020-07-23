@@ -1,10 +1,6 @@
 <template>
   <v-container class="maxHeight2 pt-0" fluid>
     <v-row justify="center" align="center" class="min-vh-100">
-      <!-- <button @click="authenticate().then(loadClient)">
-      authorize and load
-    </button>
-    <button @click="execute()">execute</button> -->
       <v-col xs="12" sm="12" md="6">
         <v-row justify="center" align="center">
           <h1>
@@ -274,7 +270,6 @@
   export default {
     auth: false,
     fetch() {
-      console.log('fetching')
       this.onSubmit()
     },
     data() {
@@ -461,7 +456,6 @@
         await this.$axios
           .$get(url)
           .then((response) => {
-            console.log('onSubmit')
             this.grados = Object.keys(response)
             this.cursos = Object.values(response)
           })
@@ -469,48 +463,6 @@
             console.log(e)
           })
       }
-      /* authenticate() {
-        return gapi.auth2
-          .getAuthInstance()
-          .signIn({
-            scope:
-              'https://www.googleapis.com/auth/youtube https://www.googleapis.com/auth/youtube.force-ssl https://www.googleapis.com/auth/youtube.readonly https://www.googleapis.com/auth/youtubepartner'
-          })
-          .then(
-            function() {
-              console.log('Sign-in successful')
-            },
-            function(err) {
-              console.error('Error signing in', err)
-            }
-          )
-      },
-      loadClient() {
-        gapi.client.setApiKey('AIzaSyAMZy4Hg0tcdVkisz6o_BVwJLFWyuM4V_I')
-        return gapi.client
-          .load(
-            'https://content.googleapis.com/discovery/v1/apis/youtube/v3/rest'
-          )
-          .then(
-            function() {
-              console.log('GAPI client loaded for API')
-            },
-            function(err) {
-              console.error('Error loading GAPI client for API', err)
-            }
-          )
-      },
-      execute() {
-        return gapi.client.youtube.videos.list({}).then(
-          function(response) {
-            // Handle the results here (response.result has the parsed body).
-            console.log('Response', response)
-          },
-          function(err) {
-            console.error('Execute error', err)
-          }
-        )
-      } */
     }
   }
 </script>

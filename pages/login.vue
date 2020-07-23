@@ -100,7 +100,6 @@
         await this.$auth
           .loginWith('local', { data: this.form })
           .then((res) => {
-            console.log(res)
             this.$auth.setUser(res.data)
             this.$router.push('/')
           })
