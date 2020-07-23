@@ -397,7 +397,7 @@
 
   .fixed {
     position: fixed;
-    top: 0;
+    top: 7%;
     left: 0;
   }
 </style>

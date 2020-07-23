@@ -538,8 +538,9 @@
     align-items: center;
     justify-content: center;
   }
+
   .modal {
-    height: 40vh;
-    width: 40vw;
+    height: 80vh;
+    width: 60vw;
   }
 </style>

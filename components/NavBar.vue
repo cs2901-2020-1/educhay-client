@@ -29,7 +29,7 @@
       </template>
     </v-navigation-drawer>
 
-    <v-app-bar color="white">
+    <v-app-bar color="#0bbfe0" class="educhay-navbar">
       <!-- <span class="hidden-sm-and-up"> -->
       <span class="hidden-sm-and-up">
         <v-app-bar-nav-icon @click="sidebar = !sidebar" />
@@ -38,129 +38,87 @@
         <!-- <nuxt-link to="/" tag="span" style="cursor: pointer;">
           {{ appTitle }}
         </nuxt-link>-->
-        <b-img src="~/assets/logo.png" height="50" />
-        <small class="align-middle">En colaboración con</small>
-        <b-img src="~/assets/logo-utec.png" height="50" />
+        <b-img src="~/assets/img/Logo 6.png" height="50" />
+        <small class="align-middle text-white">En colaboración con</small>
+        <b-img src="~/assets/img/logo-white.png" height="80" width="150" />
       </v-toolbar-title>
       <v-spacer />
       <template v-if="$auth.loggedIn">
-        <template v-if="$auth.user.is_admin">
-          <v-toolbar-items class="hidden-xs-only">
+        <v-toolbar-items class="hidden-xs-only">
+          <template v-if="$auth.user.is_admin">
             <v-btn
               v-for="item in menuItemsProfesor"
               :key="item.title"
               text
               :to="item.path"
             >
-              <v-icon left dark>{{ item.icon }}</v-icon>
-              {{ item.title }}
+              <!-- <v-icon left>{{ item.icon }}</v-icon> -->
+              <div class="educhay-navbar">{{ item.title }}</div>
             </v-btn>
-            <v-btn text>
-              <v-icon left dark>mdi-account-settings</v-icon>
-              {{ this.$auth.user.nombre + ' ' + this.$auth.user.apellido }}
-            </v-btn>
-            <v-btn text to="/notifications">
-              <v-badge
-                :content="notifications"
-                :value="notifications"
-                color="green"
-                overlap
-                dot
-              >
-                <v-icon small>mdi-bell</v-icon>
-              </v-badge>
-            </v-btn>
-            <v-btn text @click="logOut">
-              <v-icon left dark>mdi-logout</v-icon>
-              Cerrar sesión
-            </v-btn>
-          </v-toolbar-items>
-        </template>
-        <template v-else-if="$auth.user.is_profe">
-          <v-toolbar-items class="hidden-xs-only">
+          </template>
+          <template v-else-if="$auth.user.is_profe">
             <v-btn
               v-for="item in menuItemsProfesor"
               :key="item.title"
               text
               :to="item.path"
             >
-              <v-icon left dark>{{ item.icon }}</v-icon>
-              {{ item.title }}
+              <!-- <v-icon left>{{ item.icon }}</v-icon> -->
+              <div class="educhay-navbar">{{ item.title }}</div>
             </v-btn>
-            <v-btn text>
-              <v-icon left dark>mdi-account-settings</v-icon>
-              {{ this.$auth.user.nombre + ' ' + this.$auth.user.apellido }}
-            </v-btn>
-            <v-btn text to="/notifications">
-              <v-badge
-                :content="notifications"
-                :value="notifications"
-                color="green"
-                overlap
-                dot
-              >
-                <v-icon small>mdi-bell</v-icon>
-              </v-badge>
-            </v-btn>
-            <v-btn text @click="logOut">
-              <v-icon left dark>mdi-logout</v-icon>
-              Cerrar sesión
-            </v-btn>
-          </v-toolbar-items>
-        </template>
-        <template v-else>
-          <v-toolbar-items class="hidden-xs-only">
+          </template>
+          <template v-else>
             <v-btn
               v-for="item in menuItemsLoggedin"
               :key="item.title"
               text
               :to="item.path"
             >
-              <v-icon left dark>{{ item.icon }}</v-icon>
-              {{ item.title }}
+              <!-- <v-icon left>{{ item.icon }}</v-icon> -->
+              <div class="educhay-navbar">{{ item.title }}</div>
             </v-btn>
-            <v-btn text>
-              <v-icon left dark>mdi-account-settings</v-icon>
-              {{ this.$auth.user.nombre + ' ' + this.$auth.user.apellido }}
-            </v-btn>
-            <v-btn text to="/notifications">
-              <v-badge
-                :content="notifications"
-                :value="notifications"
-                color="green"
-                overlap
-                dot
-              >
-                <v-icon small>mdi-bell</v-icon>
-              </v-badge>
-            </v-btn>
-            <!--            <v-menu bottom left offset-y>-->
-            <!--              <template v-slot:activator="{ on, attrs }">-->
-            <!--                <v-btn text v-bind="attrs" v-on="on">-->
-            <!--                  <v-badge-->
-            <!--                    :content="notifications"-->
-            <!--                    :value="notifications"-->
-            <!--                    color="green"-->
-            <!--                    overlap-->
-            <!--                    dot="true"-->
-            <!--                  >-->
-            <!--                    <v-icon small>mdi-bell</v-icon>-->
-            <!--                  </v-badge>-->
-            <!--                </v-btn>-->
-            <!--              </template>-->
+          </template>
+          <v-btn text class="educhay-navbar">
+            <!-- <v-icon left dark>mdi-account-settings</v-icon> -->
+            {{ this.$auth.user.nombre + ' ' + this.$auth.user.apellido }}
+          </v-btn>
+          <v-btn text to="/notifications">
+            <v-badge
+              :content="notifications"
+              :value="notifications"
+              color="green"
+              overlap
+              dot
+            >
+              <v-icon small color="white">mdi-bell</v-icon>
+            </v-badge>
+          </v-btn>
+          <v-btn text @click="logOut" class="educhay-navbar">
+            <!-- <v-icon left dark>mdi-logout</v-icon> -->
+            Cerrar sesión
+          </v-btn>
+        </v-toolbar-items>
+        <!--            <v-menu bottom left offset-y>-->
+        <!--              <template v-slot:activator="{ on, attrs }">-->
+        <!--                <v-btn text v-bind="attrs" v-on="on">-->
+        <!--                  <v-badge-->
+        <!--                    :content="notifications"-->
+        <!--                    :value="notifications"-->
+        <!--                    color="green"-->
+        <!--                    overlap-->
+        <!--                    dot="true"-->
+        <!--                  >-->
+        <!--                    <v-icon small>mdi-bell</v-icon>-->
+        <!--                  </v-badge>-->
+        <!--                </v-btn>-->
+        <!--              </template>-->
 
-            <!--              <v-list>-->
-            <!--                <v-list-item v-for="(item, index) in items" :key="index">-->
-            <!--                  <v-list-item-title>{{ item.title }}</v-list-item-title>-->
-            <!--                </v-list-item>-->
-            <!--              </v-list>-->
-            <!--            </v-menu>-->
-            <v-btn text @click="logOut">
-              <v-icon left dark>mdi-logout</v-icon>
-              Cerrar sesión
-            </v-btn>
-          </v-toolbar-items>
-        </template>
+        <!--              <v-list>-->
+        <!--                <v-list-item v-for="(item, index) in items" :key="index">-->
+        <!--                  <v-list-item-title>{{ item.title }}</v-list-item-title>-->
+        <!--                </v-list-item>-->
+        <!--              </v-list>-->
+        <!--            </v-menu>-->
       </template>
       <template v-else>
         <v-toolbar-items class="hidden-xs-only">
@@ -170,8 +128,8 @@
             text
             :to="item.path"
           >
-            <v-icon left dark>{{ item.icon }}</v-icon>
-            {{ item.title }}
+            <!-- <v-icon left dark>{{ item.icon }}</v-icon> -->
+            <div class="educhay-navbar">{{ item.title }}</div>
           </v-btn>
         </v-toolbar-items>
       </template>
@@ -183,6 +141,19 @@
   small {
     font-size: 0.6em;
     font-weight: bold;
+    font-family: 'Quicksand', sans-serif !important;
+  }
+</style>
+
+<style>
+  .indexk {
+    z-index: 1000;
+  }
+  .educhay-navbar {
+    font-size: 1.2rem !important;
+    font-family: 'Quicksand', sans-serif !important;
+    /* font-family: 'Bebas Neue', cursive !important; */
+    color: #fff !important;
   }
 </style>
 
@@ -230,9 +201,3 @@
     }
   }
 </script>
-
-<style>
-  .indexk {
-    z-index: 1000;
-  }
-</style>
