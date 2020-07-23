@@ -93,7 +93,7 @@
               <v-icon small color="white">mdi-bell</v-icon>
             </v-badge>
           </v-btn>
-          <v-btn text @click="logOut" class="educhay-navbar">
+          <v-btn text class="educhay-navbar" @click="logOut">
             <!-- <v-icon left dark>mdi-logout</v-icon> -->
             Cerrar sesión
           </v-btn>

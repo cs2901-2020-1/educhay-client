@@ -165,7 +165,7 @@
                         align-self="start"
                         justify-self="end"
                       >
-                        <v-icon @click="deleteComment(comment.id)"
+                        <v-icon @click="deleteComment(comentario.comment_id)"
                           >mdi-minus</v-icon
                         >
                       </v-col>
@@ -361,15 +361,14 @@
           })
       },
       async deleteComment(commentId) {
-        const url = '/comments/delete'
+        let url = '/comments/delete'
         await this.$axios
-          .$put(url, {
-            creador_email: this.$auth.user.email,
-            video_id: this.id,
-            comment_id: commentId
-          })
-          .then((res) => {
-            console.log(res)
+          .$delete(url, {
+            data: {
+              creador_email: this.$auth.user.email,
+              video_id: this.id,
+              comment_id: commentId
+            }
           })
           .catch((e) => {
             console.log(e)
@@ -381,7 +380,6 @@
             user_email: this.$auth.user.email
           })
           .then((res) => {
-            console.log(res)
             this.comments = res.data.comments
           })
           .catch((e) => {
