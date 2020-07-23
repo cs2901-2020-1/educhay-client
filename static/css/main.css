@@ -247,3 +247,7 @@ small {
 .video-author {
   background-color: rgb(243, 244, 244) !important;
 }
+
+.title-size {
+  font-size: 2vw;
+}

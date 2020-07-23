@@ -51,11 +51,11 @@
           <video-player :options="videoOptions" />
         </template>
         <b-row align-h="between" class="video-title p-3">
-          <div class="text-lg-h4 font-weight-black">
+          <div class="text-lg-h4 font-weight-black title-size">
             {{ title }}
           </div>
           <div>
-            <div v-if="!isYoutube">
+            <div v-if="isYoutube === false">
               <a :href="urlUpload"></a>
             </div>
             <v-btn color="#b0dee4" @click.stop="dialog = true">

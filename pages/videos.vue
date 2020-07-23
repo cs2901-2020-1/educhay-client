@@ -77,7 +77,8 @@
             <v-row align="center" class="mx-0">
               <v-rating
                 :value="video.rating"
-                color="yellow"
+                background-color="orange lighten-3"
+                color="orange"
                 dense
                 half-increments
                 readonly
