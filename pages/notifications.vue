@@ -22,7 +22,6 @@
         .$get(url)
         .then((res) => {
           this.notifications = res
-          console.log(this.notifications)
         })
         .catch((e) => {
           console.log(e)
