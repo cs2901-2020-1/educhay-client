@@ -2,7 +2,7 @@
   <v-container>
     <h1 class="text-center mb-5">Notificaciones</h1>
     <v-alert
-      v-for="notification in filteredNotifications"
+      v-for="notification in notifications"
       :key="notification.key"
       type="success"
     >
