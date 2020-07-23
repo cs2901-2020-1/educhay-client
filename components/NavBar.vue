@@ -40,7 +40,7 @@
         </nuxt-link>-->
         <b-img src="~/assets/img/Logo 6.png" height="50" />
         <small class="align-middle text-white">En colaboración con</small>
-        <b-img src="~/assets/img/logo-white.png" height="80" width="150" />
+        <b-img src="~/assets/img/utec 2.png" height="60" width="150" />
       </v-toolbar-title>
       <v-spacer />
       <template v-if="$auth.loggedIn">
@@ -136,26 +136,6 @@
     </v-app-bar>
   </div>
 </template>
-
-<style scoped>
-  small {
-    font-size: 0.6em;
-    font-weight: bold;
-    font-family: 'Quicksand', sans-serif !important;
-  }
-</style>
-
-<style>
-  .indexk {
-    z-index: 1000;
-  }
-  .educhay-navbar {
-    font-size: 1.2rem !important;
-    font-family: 'Quicksand', sans-serif !important;
-    /* font-family: 'Bebas Neue', cursive !important; */
-    color: #fff !important;
-  }
-</style>
 
 <script>
   export default {

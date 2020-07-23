@@ -173,34 +173,3 @@
     }
   }
 </script>
-
-<style>
-  .colorDarken {
-    background-color: aliceblue;
-  }
-
-  .maxHeight {
-    max-height: 90vh;
-    overflow-y: auto;
-  }
-  /* width */
-  ::-webkit-scrollbar {
-    padding-top: 7px;
-    width: 7px;
-  }
-
-  /* Track */
-  ::-webkit-scrollbar-track {
-    background: #778bb6;
-  }
-
-  /* Handle */
-  ::-webkit-scrollbar-thumb {
-    background: rgb(43, 116, 211);
-  }
-
-  /* Handle on hover */
-  ::-webkit-scrollbar-thumb:hover {
-    background: rgb(9, 45, 112);
-  }
-</style>
