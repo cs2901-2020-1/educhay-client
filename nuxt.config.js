@@ -33,7 +33,14 @@ export default {
   /*
    ** Global CSS
    */
-  css: [],
+  css: ['~/static/css/main.css'],
+  render: {
+    bundleRenderer: {
+      shouldPreload: (file, type) => {
+        return ['style', 'font'].includes(type)
+      }
+    }
+  },
   /*
    ** Plugins to load before mounting the App
    */

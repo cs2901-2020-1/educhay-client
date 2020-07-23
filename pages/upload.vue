@@ -1,5 +1,5 @@
 <template>
-  <v-container class="maxHeight2 pt-0" fluid>
+  <!-- <v-container class="maxHeight2 pt-0" fluid>
     <v-row justify="center" align="center" class="min-vh-100">
       <v-col xs="12" sm="12" md="6">
         <v-row justify="center" align="center">
@@ -8,19 +8,41 @@
           </h1>
         </v-row>
         <v-row justify="center" align="center">
-          <v-dialog v-model="showUpload" persistent class="modal">
+          
+        </v-row>
+      </v-col>
+      <v-col xs="12" sm="12" md="6">
+        <v-row justify="center" align="center">
+          <h1>
+            Subir video de Youtube
+          </h1>
+        </v-row>
+        <v-row justify="center" align="center">
+          
+        </v-row>
+      </v-col>
+    </v-row>
+  </v-container> -->
+  <b-container>
+    <b-row align-v="center">
+      <b-col md="4">
+        <b-img class="index1" src="~/assets/img/9.jpg" alt="" fluid></b-img>
+      </b-col>
+      <b-col md="4">
+        <b-row>
+          <v-dialog v-model="showUpload" width="60vw" retain-focus="true">
             <template v-slot:activator="{ on, attrs }">
-              <div class="localVid">
-                <v-btn
-                  color="rgb(25, 84, 140)"
-                  large
-                  fab
-                  dark
+              <div>
+                <b-button
+                  variant="grey"
+                  class="text-uppercase t-5 bebas"
                   v-bind="attrs"
                   v-on="on"
                 >
-                  <v-icon>mdi-television</v-icon>
-                </v-btn>
+                  <p class="m-0">
+                    subir <span class="t-blue">archivo</span> de video
+                  </p>
+                </b-button>
               </div>
             </template>
             <v-card>
@@ -94,26 +116,40 @@
                           </span>
                         </template>
                       </v-file-input>
-                      <v-card-text>
-                        <v-row justify="center" align="center">
-                          <v-textarea
-                            v-model="form.description"
-                            label="Descripcion"
-                            counter
-                            maxlength="200"
-                            full-width
-                            single-line
-                          >
-                          </v-textarea>
-                        </v-row>
-                      </v-card-text>
                     </v-col>
                   </v-row>
-                  <v-row justify="center" align="center">
-                    <v-col md="6">
+                  <b-row>
+                    <b-col md="3">
+                      <b-img
+                        class="index1"
+                        src="~/assets/img/3.jpg"
+                        alt=""
+                        fluid
+                      ></b-img>
+                    </b-col>
+                    <b-col md="9">
+                      <v-row>
+                        <v-card-text>
+                          <v-row justify="center" align="center">
+                            <v-textarea
+                              v-model="form.description"
+                              label="Agregar descripción"
+                              counter
+                              maxlength="200"
+                              full-width
+                              single-line
+                            >
+                            </v-textarea>
+                          </v-row>
+                        </v-card-text>
+                      </v-row>
+                      <br />
                       <v-row justify="center" align="center">
                         <v-card-actions>
-                          <v-btn color="primary" @click="submitFile"
+                          <v-btn
+                            color="#0bbfe0"
+                            class="text-white"
+                            @click="submitFile"
                             >Subir</v-btn
                           >
                         </v-card-actions>
@@ -135,27 +171,29 @@
                           Error
                         </v-alert>
                       </v-row>
-                    </v-col>
-                  </v-row>
+                    </b-col>
+                  </b-row>
                 </v-container>
               </v-card-text>
             </v-card>
           </v-dialog>
-        </v-row>
-      </v-col>
-      <v-col xs="12" sm="12" md="6">
-        <v-row justify="center" align="center">
-          <h1>
-            Subir video de Youtube
-          </h1>
-        </v-row>
-        <v-row justify="center" align="center">
-          <v-dialog v-model="showModal" persistent class="modal">
+        </b-row>
+        <br />
+        <br />
+        <b-row>
+          <v-dialog v-model="showModal" width="60vw" retain-focus="true">
             <template v-slot:activator="{ on, attrs }">
-              <div class="youtubeVid">
-                <v-btn color="error" dark v-bind="attrs" v-on="on">
-                  youtube
-                </v-btn>
+              <div>
+                <b-button
+                  variant="grey"
+                  class="text-uppercase t-5 bebas"
+                  v-bind="attrs"
+                  v-on="on"
+                >
+                  <p class="m-0">
+                    subir video de <span class="t-blue">youtube</span>
+                  </p>
+                </b-button>
               </div>
             </template>
             <v-card>
@@ -181,9 +219,9 @@
                           label="Link"
                           required
                         ></v-text-field>
-                        <v-btn color="success" @click="checkId">
+                        <!-- <v-btn color="success" @click="checkId">
                           Check
-                        </v-btn>
+                        </v-btn> -->
                       </v-row>
                       <v-row>
                         <v-select
@@ -215,55 +253,76 @@
                           required
                         ></v-select>
                       </v-row>
-                      <v-row>
-                        <v-textarea
-                          v-model="form.description"
-                          label="Descripcion"
-                          counter
-                          maxlength="200"
-                          full-width
-                          single-line
-                        >
-                        </v-textarea>
-                      </v-row>
                     </v-col>
                   </v-row>
-                  <v-row justify="center" align="center">
-                    <v-card-actions>
-                      <v-btn color="primary" @click="uploadVideo">
-                        Subir
-                      </v-btn>
-                    </v-card-actions>
-                    <v-progress-linear
-                      v-show="progress"
-                      indeterminate
-                      color="cyan"
-                      class="mt-3"
-                    ></v-progress-linear>
-                  </v-row>
-                  <v-row justify="center" align="center">
-                    <v-col md="4">
-                      <v-row v-if="message" justify="center" align="center">
-                        <v-alert v-if="message === 'correcto'" type="success">
-                          Success
-                        </v-alert>
-                        <v-alert
-                          v-else-if="message === 'incorrecto'"
-                          type="error"
-                        >
-                          Error
-                        </v-alert>
+                  <b-row>
+                    <b-col md="3">
+                      <b-img
+                        class="index1"
+                        src="~/assets/img/3.jpg"
+                        alt=""
+                        fluid
+                      ></b-img>
+                    </b-col>
+                    <b-col md="9">
+                      <v-textarea
+                        v-model="form.description"
+                        label="Descripcion"
+                        counter
+                        maxlength="200"
+                        full-width
+                        single-line
+                      >
+                      </v-textarea>
+                      <br />
+                      <v-row justify="center" align="center">
+                        <v-card-actions>
+                          <v-btn
+                            color="#0bbfe0"
+                            class="text-white"
+                            @click="uploadVideo"
+                          >
+                            Subir
+                          </v-btn>
+                        </v-card-actions>
+                        <v-progress-linear
+                          v-show="progress"
+                          indeterminate
+                          color="cyan"
+                          class="mt-3"
+                        ></v-progress-linear>
                       </v-row>
-                    </v-col>
-                  </v-row>
+                      <v-row justify="center" align="center">
+                        <v-col md="4">
+                          <v-row v-if="message" justify="center" align="center">
+                            <v-alert
+                              v-if="message === 'correcto'"
+                              type="success"
+                            >
+                              Success
+                            </v-alert>
+                            <v-alert
+                              v-else-if="message === 'incorrecto'"
+                              type="error"
+                            >
+                              Error
+                            </v-alert>
+                          </v-row>
+                        </v-col>
+                      </v-row>
+                    </b-col>
+                  </b-row>
                 </v-container>
               </v-card-text>
             </v-card>
           </v-dialog>
-        </v-row>
-      </v-col>
-    </v-row>
-  </v-container>
+        </b-row>
+      </b-col>
+      <b-col md="4">
+        <b-img class="index1" src="~/assets/img/10.jpg" alt="" fluid></b-img>
+      </b-col>
+    </b-row>
+  </b-container>
 </template>
 
 <script>
@@ -466,33 +525,3 @@
     }
   }
 </script>
-
-<style>
-  .maxHeight2 {
-    height: 93vh;
-    overflow: hidden;
-  }
-
-  .localVid {
-    background-color: rgb(167, 218, 241);
-    height: 30vh;
-    width: 30vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  .youtubeVid {
-    background-color: rgb(243, 188, 188);
-    height: 30vh;
-    width: 30vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  .modal {
-    height: 80vh;
-    width: 60vw;
-  }
-</style>
