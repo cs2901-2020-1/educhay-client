@@ -54,12 +54,14 @@
           <div class="text-lg-h4 font-weight-black">
             {{ title }}
           </div>
-          <!-- <div v-if="!isYoutube">
-                <a :href="urlUpload"></a>
-              </div> -->
-          <v-btn color="#b0dee4" @click.stop="dialog = true">
-            Calificar
-          </v-btn>
+          <div>
+            <div v-if="!isYoutube">
+              <a :href="urlUpload"></a>
+            </div>
+            <v-btn color="#b0dee4" @click.stop="dialog = true">
+              Calificar
+            </v-btn>
+          </div>
         </b-row>
         <b-row align-h="between" align-v="start" class="video-author p-3">
           <div class="p-3">
